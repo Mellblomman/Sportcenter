@@ -8,8 +8,8 @@ SET availability = CASE WHEN availability = TRUE THEN FALSE ELSE TRUE END
 WHERE court_id = your_court_id;
 
 
-INSERT INTO court (court_id, activity, datetime, price, availability)
-VALUES (your_court_id, 'New Activity', 'New DateTime', new_price, 'Available');
+INSERT INTO court (court_id, activity,  price, datetime, availability)
+VALUES (new_court_id, new_activity, new_datetime, new_price, new_availability);
 
 
 DELETE FROM court
