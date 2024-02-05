@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="/static/style.css">
     <style>
         /* Button style for send button */
-        input[type="submit"] {
+        .custom-button {
             margin-top: 10px; /* Add space over button */
             margin-bottom: 10px; /* Add space under button */
             padding: 10px 20px; /* Adjust button padding */
@@ -17,11 +17,30 @@
             border-radius: 5px; /* Rounding buttons corners */
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); /* Add shadow on button */
             transition: transform 0.3s ease; /* Transform button */
+            cursor: pointer; /* Pointer to hand while hovering */
+            display: block; /* Button to block-element to move it under text field */
         }
 
-        input[type="submit"]:hover {
-            transform: translateY(-2px); /* button move up when hover */
+        .custom-button:hover {
+            transform: translateY(-2px); /* Button move up when hover */
             box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.5); /* Increasing shadoweffect while hovering over button */
+        }
+        
+        #message {
+            max-width: 600px; /* Text width */
+            margin: 20px auto; /* Justera placeringen för texten */
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5); /* Shadow effect */
+            text-align: center; /* Text placering center */
+            color: white; /* Textfärg */
+        }
+
+        .calendar-container {
+            position: absolute;
+            top: 200px; /* Justera kalenderns vertikala placering */
+            left: 20px;
         }
 
         .calendar {
@@ -56,11 +75,11 @@
         .calendar-day:hover .info {
             display: block;
         }
-        
-        
     </style>
 </head>
 <body>  
+    <!-- Picture in the middle of the page -->
+    <img class="center-image" src="/static/sportcenter.png" alt="Sportcenter">
     <!-- Header -->
     <header>
         <h1>Devops Sportcenter</h1>
@@ -82,24 +101,31 @@
         <a href="/contact.html">Kontakt</a>
         <a href="/cancellation.html">Avbokning</a>
     </nav>
-    
 
-    <!-- Booking Section -->
+    <!-- Boka Padelbana Text -->
     <section id="booking">
-        <h2>Boka Padelhall</h2>
-        <p>Välj ett datum för att boka padelhallen:</p>
+        <h2 id="booking-heading">Boka Padelbana</h2>
+    </section>
 
-        <!-- Calendar -->
+    <!-- Calendar -->
+    <div class="calendar-container">
         <div class="calendar">
             {{ calendar | safe }}
         </div>
 
         <!-- Booking Form -->
-        <form id="booking-form" method="POST" action="/padelbooking.html">
-            <input type="hidden" id="" name="selected_date">
-            <input type="submit" value="Nästa">
-        </form>
-    </section>
+        <section id="booking-form">
+            <form method="POST" action="/padelbooking.html">
+                <input type="hidden" id="selected-date" name="selected_date">
+                <button type="submit" class="custom-button">Nästa</button>
+            </form>
+        </section>
+    </div>
+
+    <div class="container">
+        <div id="message">
+            <span style="color: white; font-weight: bold;">{{ message | safe }}</span>
+        </div>
 
     <script>
         // Add click event listeners to each calendar day
