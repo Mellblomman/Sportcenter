@@ -6,30 +6,30 @@
     <title>Devops Sportcenter</title>
     <link rel="stylesheet" href="/static/style.css">
     <style>
-        /* Justerad stil för avboka-knappen */
+        /* Button style for send button */
         .custom-button {
-            margin-top: 10px; /* Lägger till lite utrymme ovanför knappen */
-            margin-bottom: 10px; /* Lägger till lite mer utrymme under knappen */
-            padding: 10px 20px; /* Justerar knappens padding */
-            border: none; /* Tar bort kantlinjen */
-            background-color: #0097b2; /* Bakgrundsfärg för knappen */
-            color: white; /* Textfärg för knappen */
-            border-radius: 5px; /* Rundar av knappens hörn */
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); /* Lägger till en shadow */
-            transition: transform 0.3s ease; /* Gör övergångseffekten jämn */
-            cursor: pointer; /* Gör muspekaren till en hand vid hover */
-            display: block; /* Gör knappen till ett block-element för att flytta den under texten */
+            margin-top: 10px; /* Add space over button */
+            margin-bottom: 10px; /* Add space under button */
+            padding: 10px 20px; /* Adjust button padding */
+            border: none; /* Remove lines on button */
+            background-color: #0097b2; /* Background color for button */
+            color: white; /* Textcolor for button */
+            border-radius: 5px; /* Rounding buttons corners */
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); /* Add shadow on button */
+            transition: transform 0.3s ease; /* Transform button */
+            cursor: pointer; /* Pointer to hand while hovering */
+            display: block; /* Button to block-element to move it under text field */
         }
 
         .custom-button:hover {
-            transform: translateY(-2px); /* Ger en liten upplyftningseffekt vid hover */
-            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.5); /* Ökar shadow-effekten vid hover */
+            transform: translateY(-2px); /* Button move up when hover */
+            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.5); /* Increasing shadoweffect while hovering over button */
         }
     </style>
 </head>
 <body>
 
-<!-- Bild i mitten av sidan -->
+<!-- Picture middle of screen -->
 <img class="center-image" src="/static/sportcenter.png" alt="Sportcenter">
 
 <!-- Header -->
@@ -59,7 +59,7 @@
     <br>
     <form action="/confirmationcancellation.html" method="post">
         <input type="text" name="bookingNumber" class="text-input" placeholder="Bokningsnummer">
-        <br> <!-- Lägg till en radbrytning för att flytta knappen under textrutan -->
+        <br> <!-- Newline -->
         <br>
         <button type="submit" class="custom-button">Avboka</button>
     </form>
