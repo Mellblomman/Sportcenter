@@ -4,7 +4,7 @@ WHERE court_id = your_court_id;
 
 
 UPDATE court
-SET availability = CASE WHEN availability = 'True' THEN 'False' ELSE 'True' END
+SET availability = CASE WHEN availability = TRUE THEN FALSE ELSE TRUE END
 WHERE court_id = your_court_id;
 
 
