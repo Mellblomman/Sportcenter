@@ -84,3 +84,20 @@ def update_booking_time(booking_id, new_datetime):
     conn.commit()
 
     conn.close()
+
+#Cancel booking
+def cancel_booking(booking_id):
+    conn = psycopg2.connect(
+        host='your_postgres_host',
+        user='your_postgres_user',
+        password='your_postgres_password',
+        database='your_datebase'
+    )
+    cursor = conn.cursor()
+
+    query = f"DELETE FROM bookings WHERE booking_id = {booking_id}"
+    
+    cursor.execute(query)
+    conn.commit()
+
+    conn.close()
