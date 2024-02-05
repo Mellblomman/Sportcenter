@@ -2,6 +2,7 @@
 CREATE TABLE court (
     court_id VARCHAR(10) PRIMARY KEY,
     activity VARCHAR(30),
+    price int,
     datetime TIMESTAMP,
     availability BOOLEAN NOT NULL
 );
@@ -27,8 +28,8 @@ SELECT TO_CHAR(datetime, 'YYYY-MM-DD HH24') AS formatted_timestamp
 FROM court;
 
 -- Test
-INSERT INTO court(court_id, activity,datetime, availability)VALUES
-('12346','Tennis','2024-01-12 20:35:20',TRUE);
+INSERT INTO court(court_id, activity, price, datetime, availability)VALUES
+('12346','Tennis', 150, '2024-01-12 20:35:20',TRUE);
 
 INSERT INTO bookings (booking_id, court_id, datetime)VALUES
 ('1','12346','2024-01-12 20:35:20');
