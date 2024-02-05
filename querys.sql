@@ -19,3 +19,6 @@ WHERE court_id = your_court_id;
 UPDATE bookings
 SET datetime = new_datetime
 WHERE booking_id = your_booking_id;
+
+DELETE FROM bookings
+WHERE booking_id = your_booking_id;
