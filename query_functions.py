@@ -35,7 +35,7 @@ def toggle_availability(court_id):
     conn.close()
 
 #Add activity
-def add_activity(your_court_id, new_price):
+def add_activity(new_court_id, new_activity, new_datetime, new_price, new_availability):
     conn = psycopg2.connect(
         host='your_postgres_host',
         user='your_postgres_user',
