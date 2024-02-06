@@ -3,10 +3,9 @@ import psycopg2
 #Update price
 def update_price(court_id, new_price):
     conn = psycopg2.connect(
-        host='your_postgres_host',
-        user='your_postgres_user',
-        password='your_postgres_password',
-        database='your_database'
+        host="postgres",
+        user="postgres",
+        database="postgres"
     )
     cursor = conn.cursor()
 
@@ -20,10 +19,9 @@ def update_price(court_id, new_price):
 #Availability
 def toggle_availability(court_id):
     conn = psycopg2.connect(
-        host='your_postgres_host',
-        user='your_postgres_user',
-        password='your_postgres_password',
-        database='your_database'
+        host="postgres",
+        user="postgres",
+        database="postgres"
     )
     cursor = conn.cursor()
 
@@ -37,10 +35,9 @@ def toggle_availability(court_id):
 #Add activity
 def add_activity(new_court_id, new_activity, new_datetime, new_price, new_availability):
     conn = psycopg2.connect(
-        host='your_postgres_host',
-        user='your_postgres_user',
-        password='your_postgres_password',
-        database='your_database'
+        host="postgres",
+        user="postgres",
+        database="postgres"
     )
     cursor = conn.cursor()
 
@@ -54,10 +51,9 @@ def add_activity(new_court_id, new_activity, new_datetime, new_price, new_availa
 #Delete activity
 def delete_activity(court_id):
     conn = psycopg2.connect(
-        host='your_postgres_host',
-        user='your_postgres_user',
-        password='your_postgres_password',
-        database='your_database'
+        host="postgres",
+        user="postgres",
+        database="postgres"
     )
     cursor = conn.cursor()
 
@@ -71,10 +67,9 @@ def delete_activity(court_id):
 #Update time of booking
 def update_booking_time(booking_id, new_datetime):
     conn = psycopg2.connect(
-        host='your_postgres_host',
-        user='your_postgres_user',
-        password='your_postgres_password',
-        database='your_database'
+        host="postgres",
+        user="postgres",
+        database="postgres"
     )
     cursor = conn.cursor()
 
@@ -88,10 +83,9 @@ def update_booking_time(booking_id, new_datetime):
 #Cancel booking
 def cancel_booking(booking_id):
     conn = psycopg2.connect(
-        host='your_postgres_host',
-        user='your_postgres_user',
-        password='your_postgres_password',
-        database='your_datebase'
+        host="postgres",
+        user="postgres",
+        database="postgres"
     )
     cursor = conn.cursor()
 
