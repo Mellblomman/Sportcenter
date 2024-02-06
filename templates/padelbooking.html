@@ -49,37 +49,59 @@
     <a href="/cancellation.html">Avbokning</a>
 </nav>
 
-<!-- Select element for choosing times -->
-<div>
-    <label for="times">Välj tid:</label>
-    <select id="times" name="times" class="custom-button">
-        <option value="08:00">08:00</option>
-        <option value="09:00">09:00</option>
-        <option value="10:00">10:00</option>
-        <option value="11:00">11:00</option>
-        <option value="12:00">12:00</option>
-        <option value="13:00">13:00</option>
-        <option value="14:00">14:00</option>
-        <option value="15:00">15:00</option>
-        <option value="16:00">16:00</option>
-        <option value="17:00">17:00</option>
-    </select>
-</div>
-
-<div class="container">
-    <h2 style="color: white;">Fyll i dina uppgifter</h2>
-    <br>
-    <form action="/padelbookingconfirmed.html" method="post">
-        <input type="text" name="email" class="text-input" placeholder="Email">
-        <br> <!-- Newline -->
-        <br>
-        <input type="text" name="phone" class="text-input" placeholder="Telefonnummer">
-        <br> <!-- Newline -->
-        <br>
-        <button type="submit" class="custom-button">Bekräfta</button>
-    </form>
-    <div id="message"></div>
-</div>
-
+    <h1>Välj tid och datum</h1>
+    <h2><form action="/padelbookingconfirmed.html" method="post">
+      <div class="elem-group">
+        <label for="name">Ditt namn</label>
+        <input type="text" id="name" name="visitor_name" placeholder="Sven Svensson" pattern=[A-Z\sa-z]{3,20} required>
+      </div>
+      <div class="elem-group">
+        <label for="email">Din mailadress</label>
+        <input type="email" id="email" name="visitor_email" placeholder="sven.svensson@email.com" required>
+      </div>
+      <div class="elem-group">
+        <label for="phone">Mobilnummer</label>
+        <input type="tel" id="phone" name="visitor_phone" placeholder="0712-345 678" pattern=(\d{3})-?\s?(\d{3})-?\s?(\d{4}) required>
+      </div>
+      <hr>
+      <div class="elem-group inlined">
+        <label for="adult">Antal personer</label>
+        <input type="number" id="adult" name="totalt" placeholder="2" min="1" required>
+      </div>
+      <div class="elem-group inlined">
+        <label for="checkin-date">Välj datum och tid.</label>
+        <input type="datetime-local" id="checkin-date" name="checkin" required>
+      </div>
+      <div class="elem-group inlined">
+        <label for="checkout-date">Välj sluttid.</label>
+        <input type="datetime-local" id="checkout-date" name="checkout" required>
+      </div>
+      <div class="elem-group">
+        <label for="room-selection">Välj saker att hyra.</label>
+        <select id="room-selection" name="room_preference" required>
+            <option value="">Välj artikel från listan</option>
+            <option value="connecting">Racket/Bollar</option>
+            <option value="adjoining">Skor</option>
+            <option value="adjacent">Simkläder</option>
+        </select>
+      </div>
+      <hr>
+      <div class="elem-group">
+        <label for="message">Övriga önskemål?</label>
+        <textarea id="message" name="visitor_message" placeholder="Berätta om vi kan göra någonting mer för er upplevelse." required></textarea>
+      </div>
+      <button type="submit"><a href="padelbookingconfirmed.html">Bekräfta</a></button>        </form></h2>
+    
+    
+<script src="bookingformula.js"></script>
 </body>
 </html>
+</html>
+
+---------------------------------------
+
+
+
+
+    
+   
