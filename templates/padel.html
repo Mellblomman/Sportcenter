@@ -114,36 +114,63 @@
         </div>
 
         <!-- Booking Form -->
-        <section id="booking-form">
-            <form method="POST" action="/padelbooking.html">
-                <input type="hidden" id="selected-date" name="selected_date">
-                <button type="submit" class="custom-button">Nästa</button>
-            </form>
-        </section>
+        
+    </div>
+    <form id="calendarForm">
+    
+        <label for="date">Choose a Date:</label><br>
+        <input type="date" id="date" name="date"><br><br>
+        
+        <label for="time">Choose a Time:</label><br>
+        <select id="time" name="time">
+            <option value="07">07:00 </option>
+            <option value="08">08:00 </option>
+            <option value="09">09:00 </option>
+            <option value="10">10:00 </option>
+            <option value="11">11:00 </option>
+            <option value="12">12:00 </option>
+            <option value="13">13:00 </option>
+            <option value="14">14:00 </option>
+            <option value="15">15:00 </option>
+            <option value="16">16:00 </option>
+            <option value="17">17:00 </option>
+        </select><br><br>
+            
+    </form>
+    <div class="container">
+        <h2 style="color: white;">Fyll i dina uppgifter</h2>
+        <br>
+        <form action="/padelbookingconfirmed.html" method="post">
+            <input type="text" name="email" class="text-input" placeholder="Email">
+            <br> <!-- Newline -->
+            <br>
+            <input type="text" name="phone" class="text-input" placeholder="Telefonnummer">
+            <br> <!-- Newline -->
+            <br>
+            <button type="submit" id="submitBtn" class="custom-button">Bekräfta</button>
+        </form>
+        <div id="message"></div>
     </div>
 
     <div class="container">
         <div id="message">
             <span style="color: white; font-weight: bold;">{{ message | safe }}</span>
         </div>
-
-    <script>
-        // Add click event listeners to each calendar day
-        const calendarDays = document.querySelectorAll('.calendar-day');
-        calendarDays.forEach(day => {
-            day.addEventListener('click', function() {
-                // Remove 'selected' class from all days
-                calendarDays.forEach(day => {
-                    day.classList.remove('selected');
-                });
-                // Add 'selected' class to the clicked day
-                this.classList.add('selected');
-                // Update the hidden input field with the selected date
-                const selectedDate = this.getAttribute('data-date');
-                document.getElementById('selected-date').value = selectedDate;
+    
+        
+        <script>
+            document.getElementById('submitBtn').addEventListener('click', function() {
+              // Hämta det valda datumet och tiden
+              var selectedDate = document.getElementById('date').value;
+              var selectedTime = document.getElementById('time').value;
+        
+              // Lägg till en standardtid ("00:00:00") eftersom vi inte har minuter och sekunder
+              var selectedDateTime = new Date(selectedDate + 'T' + selectedTime + ':00:00');
+        
+              // Omdirigera användaren till den bekräftelsesidan
+              window.location.href = "padelbookingconfirmed.html";
             });
-        });
-    </script>
-
+          </script>
+   
 </body>
 </html>

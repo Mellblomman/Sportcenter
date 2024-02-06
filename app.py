@@ -1,9 +1,11 @@
-from flask import Flask, request, render_template, url_for
+from flask import Flask, request, render_template, url_for, session, redirect
 import os
-import calendar
 import psycopg2
 from datetime import datetime
+
 app = Flask(__name__)
+
+app.secret_key = os.urandom(24)
 
 @app.route("/", methods=["GET"])
 def render_index():
@@ -44,29 +46,37 @@ def render_tennis():
 def render_confirmationcontact():
     return render_template("confirmationcontact.html", message="<span style='color: white;'>Tack för ditt mail, vi återkommer inom kort.</span>")
 
-def generate_calendar(year, month):
-    cal = calendar.HTMLCalendar(calendar.SUNDAY)
-    # Generate the HTML for the calendar
-    cal_html = cal.formatmonth(year, month)
-    # Add attributes to each day to make them clickable
-    cal_html = cal_html.replace('<td ', '<td class="calendar-day" data-year="{0}" data-month="{1}" '.format(year, month))
-    return cal_html
 
-@app.route("/padel.html", methods=["GET"])
-def render_padel():
-    now = datetime.now()
-    year = now.year
-    month = now.month
-    cal_html = generate_calendar(year, month)
-    return render_template("padel.html", calendar=cal_html, message="<span style='color: white;'>Padel</span>")
-
-@app.route("/padelbooking.html", methods=["POST"])
+@app.route("/padel.html", methods=["POST", "GET"])
 def render_padelbooking():
-    return render_template("padelbooking.html")
+    if request.method == "POST":
+        # Hämta valt datum och tid från formuläret
+        selected_date = request.form.get("date")
+        selected_time = request.form.get("time")
+
+        # Spara datum och tid i sessionen
+        session['selected_date'] = selected_date
+        session['selected_time'] = selected_time
+
+        return redirect(url_for('render_padelbookingconfirmed'))
+    else:
+        return render_template("padel.html")
+
+
 
 @app.route("/padelbookingconfirmed.html", methods=["POST"])
 def render_padelbookingconfirmed():
-    return render_template("padelbookingconfirmed.html")
+    # Hämta datum och tid från sessionen
+    selected_date = session.get('selected_date')
+    selected_time = session.get('selected_time')
+
+    if selected_date and selected_time:
+        datum_tid = f"{selected_date} {selected_time}"
+    else:
+        datum_tid = "Ingen datum eller tid vald"
+
+    return render_template("padelbookingconfirmed.html", message=datum_tid)
+
 
 
 
