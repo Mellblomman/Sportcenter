@@ -67,6 +67,9 @@ def render_padel():
 def render_padelbooking():
     return render_template("padelbooking.html")
 
+@app.route("/padelbookingconfirmed.html", methods=["POST"])
+def render_padelbookingconfirmed():
+    return render_template("padelbookingconfirmed.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
