@@ -21,10 +21,6 @@ def render_activities():
 def render_cancellation():
     return render_template("cancellation.html")
 
-#@app.route("/confirmationcancellation.html", methods=['POST'])
-#def confirmationcancellation():
-#    return render_template("confirmationcancellation.html", message="<span style='color: white;'>Tack för din avbokning, vi hoppas att vi syns inom snar framtid!</span>")
-
 
 @app.route("/badminton.html", methods=["GET"])
 def render_badminton():
@@ -87,11 +83,13 @@ conn_details = {
 @app.route("/confirmationcancellation.html", methods=["POST"])
 def delete_booking():
     booking_id = request.form.get("booking_id") # Sparar datan användaren skriver in på hemsidan i booking_id variabeln
-    if booking_id: # Om användaren matar in någon data.
+    if booking_id:
         if delete_booking_from_database(booking_id):
             return render_template("confirmationcancellation.html", message="Avbokat")
         else:
-            return render_template("confirmationcancellation.html", message="hittade inget a")
+            return render_template("confirmationcancellation.html", message="Hittade ingen bokning med det id")
+    else:
+        return render_template("confirmationcancellation.html", message="Inget bokningsid angivet")
             
        
 def delete_booking_from_database(booking_id): # Funktion som kollar om booking_id finns i databasen och raderar
@@ -100,9 +98,14 @@ def delete_booking_from_database(booking_id): # Funktion som kollar om booking_i
         cur = conn.cursor() #  Verktyg för att interagera med databaser från Python-kod.
         cur.execute("DELETE FROM bookings WHERE booking_id = %s", (booking_id,)) # utför en operation men inget är permanent. conn.commit() gör det permanent.
         conn.commit() # används för att "bekräfta" alla ändringar som gjorts under den aktuella transaktionen, DVS raderingen av booking_id i databasen
+        rows_deleted = cur.rowcount # Kontrollera antalet rader som påverkades av raderingen
         cur.close() # Stänger cursor eftersom vi inte behöver den mer, frigör resurser.
         conn.close() # Stänger anslutningen till postgreSQL
-        return True 
+        
+        if rows_deleted > 0:
+            return True  # Returnera True om minst en rad togs bort (dvs bokningen fanns)
+        else:
+            return False
     except psycopg2.Error as e:
         print("Error deleting booking:", e) # Vid anslutningsfel eller felaktig syntax i sql-fråga.
         return False
