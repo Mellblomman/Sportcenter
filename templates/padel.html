@@ -28,13 +28,12 @@
         
         #message {
             max-width: 600px; /* Text width */
-            margin: 20px auto; /* Justera placeringen för texten */
+            margin: -180px auto 50px; /* Placement farther down and in */
             background-color: rgba(0, 0, 0, 0.5);
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5); /* Shadow effect */
-            text-align: center; /* Text placering center */
-            color: white; /* Textfärg */
+            text-align: center; /* Text placement center */
         }
 
         .calendar-container {
@@ -75,6 +74,14 @@
         .calendar-day:hover .info {
             display: block;
         }
+
+        label[for="times"] {
+        font-weight: bold;
+        color: white;
+        text-align: center;
+        }
+
+
     </style>
 </head>
 <body>  
@@ -102,41 +109,25 @@
         <a href="/cancellation.html">Avbokning</a>
     </nav>
 
-    <!-- Boka Padelbana Text -->
-    <section id="booking">
-        <h2 id="booking-heading">Boka Padelbana</h2>
-    </section>
+    <!-- Select element for choosing times -->
+<!--
+    <div>
+    <label for="times">Välj tid:</label>
+    <select id="times" name="times" class="custom-button">
+        <option value="08:00">08:00</option>
+        <option value="09:00">09:00</option>
+        <option value="10:00">10:00</option>
+        <option value="11:00">11:00</option>
+        <option value="12:00">12:00</option>
+        <option value="13:00">13:00</option>
+        <option value="14:00">14:00</option>
+        <option value="15:00">15:00</option>
+        <option value="16:00">16:00</option>
+        <option value="17:00">17:00</option>
+    </select>
+</div>
+-->
 
-    <!-- Calendar -->
-    <div class="calendar-container">
-        <div class="calendar">
-            {{ calendar | safe }}
-        </div>
-
-        <!-- Booking Form -->
-        
-    </div>
-    <form id="calendarForm">
-    
-        <label for="date">Choose a Date:</label><br>
-        <input type="date" id="date" name="date"><br><br>
-        
-        <label for="time">Choose a Time:</label><br>
-        <select id="time" name="time">
-            <option value="07">07:00 </option>
-            <option value="08">08:00 </option>
-            <option value="09">09:00 </option>
-            <option value="10">10:00 </option>
-            <option value="11">11:00 </option>
-            <option value="12">12:00 </option>
-            <option value="13">13:00 </option>
-            <option value="14">14:00 </option>
-            <option value="15">15:00 </option>
-            <option value="16">16:00 </option>
-            <option value="17">17:00 </option>
-        </select><br><br>
-            
-    </form>
     <div class="container">
         <h2 style="color: white;">Fyll i dina uppgifter</h2>
         <br>
@@ -147,30 +138,42 @@
             <input type="text" name="phone" class="text-input" placeholder="Telefonnummer">
             <br> <!-- Newline -->
             <br>
-            <button type="submit" id="submitBtn" class="custom-button">Bekräfta</button>
+            <input type="text" name="activity" class="text-input" placeholder="Önskad sport: ex 'Padel'">
+            <br> <!-- Newline -->
+            <br>
+            <h5 style="color: white;">Ange datum 'YYYY-MM-DD HH:MM:SS': </h5>
+            <input type="text" name="datetime" class="text-input" placeholder="Önskat datum: ex 'YYYY-MM-DD HH:MM:SS'">
+            <br> <!-- Newline -->
+            <br>
+            <button type="submit" class="custom-button">Bekräfta</button>
         </form>
-        <div id="message"></div>
+    
     </div>
 
     <div class="container">
         <div id="message">
             <span style="color: white; font-weight: bold;">{{ message | safe }}</span>
         </div>
-    
-        
+
         <script>
             document.getElementById('submitBtn').addEventListener('click', function() {
               // Hämta det valda datumet och tiden
               var selectedDate = document.getElementById('date').value;
               var selectedTime = document.getElementById('time').value;
-        
+
               // Lägg till en standardtid ("00:00:00") eftersom vi inte har minuter och sekunder
               var selectedDateTime = new Date(selectedDate + 'T' + selectedTime + ':00:00');
-        
+
+              // Visa det valda datumet och tiden
+              alert('Selected Date and Time: ' + selectedDateTime);
+
               // Omdirigera användaren till den bekräftelsesidan
               window.location.href = "padelbookingconfirmed.html";
             });
           </script>
-   
+
+
 </body>
 </html>
+
+
