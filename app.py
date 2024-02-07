@@ -48,20 +48,9 @@ def render_confirmationcontact():
     return render_template("confirmationcontact.html", message="<span style='color: white;'>Tack för ditt mail, vi återkommer inom kort.</span>")
 
 
-@app.route("/padel.html", methods=["POST", "GET"])
+@app.route("/padel.html", methods=["GET"])
 def render_padelbooking():
-    if request.method == "POST":
-        # Hämta valt datum och tid från formuläret
-        selected_date = request.form.get("date")
-        selected_time = request.form.get("time")
-
-        # Spara datum och tid i sessionen
-        session['selected_date'] = selected_date
-        session['selected_time'] = selected_time
-
-        return redirect(url_for('render_padelbookingconfirmed'))
-    else:
-        return render_template("padel.html")
+    return render_template("padel.html")
 
 
 conn_details = {
@@ -89,7 +78,7 @@ def delete_booking_from_database(booking_id): # Funktion som kollar om booking_i
     try: # Anslutning till databas
         conn = psycopg2.connect(**conn_details) # **conn_details i Python betyder att du "expanderar" dictionaryn conn_details till nyckel-värde-par
         cur = conn.cursor() #  Verktyg för att interagera med databaser från Python-kod.
-        cur.execute("DELETE FROM bookings WHERE booking_id = %s", (booking_id,)) # utför en operation men inget är permanent. conn.commit() gör det permanent.
+        cur.execute("DELETE FROM bookinginformation WHERE booking_id = %s", (booking_id,)) # utför en operation men inget är permanent. conn.commit() gör det permanent.
         conn.commit() # används för att "bekräfta" alla ändringar som gjorts under den aktuella transaktionen, DVS raderingen av booking_id i databasen
         rows_deleted = cur.rowcount # Kontrollera antalet rader som påverkades av raderingen
         cur.close() # Stänger cursor eftersom vi inte behöver den mer, frigör resurser.
@@ -103,7 +92,7 @@ def delete_booking_from_database(booking_id): # Funktion som kollar om booking_i
         print("Error deleting booking:", e) # Vid anslutningsfel eller felaktig syntax i sql-fråga.
         return False
     
-@app.route("/padelbookingconfirmed.html", methods=["POST"])
+@app.route("/bookingconfirmed.html", methods=["POST"])
 def de_booking():
     activity = request.form.get("activity")
     datetime = request.form.get("datetime")
@@ -122,11 +111,11 @@ def de_booking():
             if booking_info:
                 booking_id = booking_info[0]
                 booking_datetime = booking_info[1]
-                return render_template("padelbookingconfirmed.html", message="Bokningsinformationen har lagts till.", booking_id=booking_id, booking_datetime=booking_datetime)
+                return render_template("bookingconfirmed.html", message="Bokningsinformationen har lagts till.", booking_id=booking_id, booking_datetime=booking_datetime)
             else:
-                return render_template("padelbookingconfirmed.html", message="Ingen bokning hittades med den angivna e-postadressen.")
+                return render_template("bookingconfirmed.html", message="Ingen bokning hittades med den angivna e-postadressen.")
         else:
-            return render_template("padelbookingconfirmed.html", message="Det gick inte att lägga till bokningsinformationen.")
+            return render_template("bookingconfirmed.html", message="Det gick inte att lägga till bokningsinformationen.")
     else:
         return render_template("padelbookingconfirmed.html", message="Nödvändiga uppgifter saknas.")
 
