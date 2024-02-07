@@ -64,11 +64,6 @@ def render_padelbooking():
         return render_template("padel.html")
 
 
-
-
-
-
-
 conn_details = {
     "host": "localhost",
     "database": "postgres",
@@ -115,9 +110,21 @@ def de_booking():
     email = request.form.get("email")
     phone = request.form.get("phone")
     input_data = (activity, datetime, email, phone)
+    
     if input_data:
         if booking_confirmed(activity, datetime, email, phone):
-            return render_template("padelbookingconfirmed.html", message="Bokningsinformationen har lagts till.")
+            conn = psycopg2.connect(**conn_details)
+            cur = conn.cursor()
+            cur.execute("SELECT booking_id, datetime FROM bookinginformation WHERE email = %s", (email,))
+            booking_info = cur.fetchone()
+            cur.close()
+            conn.close()
+            if booking_info:
+                booking_id = booking_info[0]
+                booking_datetime = booking_info[1]
+                return render_template("padelbookingconfirmed.html", message="Bokningsinformationen har lagts till.", booking_id=booking_id, booking_datetime=booking_datetime)
+            else:
+                return render_template("padelbookingconfirmed.html", message="Ingen bokning hittades med den angivna e-postadressen.")
         else:
             return render_template("padelbookingconfirmed.html", message="Det gick inte att lägga till bokningsinformationen.")
     else:

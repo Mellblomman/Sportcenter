@@ -8,11 +8,12 @@ CREATE TABLE court (
 
 -- Här sparas ens personuppgifter
 CREATE TABLE bookinginformation (
-    booking_id INT PRIMARY KEY,
+    booking_id INT,
     activity VARCHAR(10), 
     datetime TIMESTAMP,
     email VARCHAR(255),
-    phone VARCHAR(20)
+    phone VARCHAR(20),
+    PRIMARY KEY(booking_id, datetime)
 );
 
 -- Får ut datum tid utan sekunder och minuter
