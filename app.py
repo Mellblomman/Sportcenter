@@ -16,51 +16,25 @@ def render_index():
 def render_contact():
     return render_template("contact.html")
 
-@app.route("/activities.html", methods=["GET"])
-def render_activities():
-    return render_template("activities.html")
-
 @app.route("/cancellation.html", methods=["GET"])
 def render_cancellation():
     return render_template("cancellation.html")
-
-
-@app.route("/badminton.html", methods=["GET"])
-def render_badminton():
-    return render_template("badminton.html", message="<span style='color: white;'>Badminton</span>")
-
-@app.route("/football.html", methods=["GET"])
-def render_football():
-    return render_template("football.html", message="<span style='color: white;'>Fotboll</span>")
-
-@app.route("/gymnastics.html", methods=["GET"])
-def render_gymnastics():
-    return render_template("gymnastics.html", message="<span style='color: white;'>Gymnastik</span>")
-
-
-
-@app.route("/tennis.html", methods=["GET"])
-def render_tennis():
-    return render_template("tennis.html", message="<span style='color: white;'>Tennis</span>")
 
 @app.route("/confirmationcontact.html", methods=["POST"])
 def render_confirmationcontact():
     return render_template("confirmationcontact.html", message="<span style='color: white;'>Tack för ditt mail, vi återkommer inom kort.</span>")
 
-
-@app.route("/padel.html", methods=["GET"])
+@app.route("/boka.html", methods=["GET"])
 def render_padelbooking():
-    return render_template("padel.html")
-
+    return render_template("boka.html")
 
 conn_details = {
     "host": "localhost",
     "database": "postgres",
     "user": "postgres",
-    "password": "megaine11",
+    "password": "Mydatabase1391",
     "port": '5432'
 }
-
 
 @app.route("/confirmationcancellation.html", methods=["POST"])
 def delete_booking():
@@ -117,7 +91,7 @@ def de_booking():
         else:
             return render_template("bookingconfirmed.html", message="Det gick inte att lägga till bokningsinformationen.")
     else:
-        return render_template("padelbookingconfirmed.html", message="Nödvändiga uppgifter saknas.")
+        return render_template("bookingconfirmed.html", message="Nödvändiga uppgifter saknas.")  # Vi når aldrig denna???
 
 
 def booking_confirmed(activity, datetime, email, phone):
