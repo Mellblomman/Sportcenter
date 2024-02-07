@@ -65,72 +65,15 @@ def render_padelbooking():
 
 
 
-"""@app.route("/padelbookingconfirmed.html", methods=["POST"])
-def render_padelbookingconfirmed():
-    # Hämta datum och tid från sessionen
-    selected_date = session.get('selected_date')
-    selected_time = session.get('selected_time')
-
-    if selected_date and selected_time:
-        datum_tid = f"{selected_date} {selected_time}"
-    else:
-        datum_tid = "Ingen datum eller tid vald"
-
-    return render_template("padelbookingconfirmed.html", message=datum_tid)"""
 
 
-@app.route("/padelbookingconfirmed.html", methods=["POST"])
-def booking_add():
-    activity = request.form.get("activity") # Hämta aktivitet från formuläret
-    datetime = request.form.get("datetime") # Hämta datum från formuläret
-    email = request.form.get("email") # Hämta email från formuläret
-    phone = request.form.get("phone") # Hämta telefonnummer från formuläret
 
-
-    if booking_confirmed(activity, datetime, email, phone):
-        return render_template("padelbookingconfirmed.html", message="Bokat")
-    else:
-        return render_template("padelbookingconfirmed.html", message="Ej bokat")
-
-def booking_confirmed(activity, datetime, email, phone):
-    try:
-        conn = psycopg2.connect(**conn_details)
-        cur = conn.cursor()
-
-        while True:
-            random_number = random.randint(000000, 999999)
-
-            #Kontrollera om det slumpmässiga numret redan finns i databasen
-            cur.execute("SELECT * FROM bookings WHERE booking_id = %s", (random_number,))
-            result = cur.fetchone()
-
-            if result:
-                print(f"{random_number} finns i databasen.")
-            else:
-                print(f"{random_number} finns inte i databasen.")
-                break
-
-        # Sätt in bokningsinformationen i databasen
-        cur.execute("INSERT INTO bookinginformation (booking_id, activity, datetime, email, phone) VALUES (%s, %s, %s, %s, %s)", (random_number, activity, datetime, email, phone))
-        conn.commit()
-        rows_added = cur.rowcount
-        cur.close()
-        conn.close()
-
-        if rows_added >= 0:
-            return True  # Returnera True om minst en rad togs bort (dvs bokningen fanns)
-        else:
-            return False
-        
-    except psycopg2.Error as e:
-        print("Error inserting booking information:", e)
-        return False
 
 conn_details = {
     "host": "localhost",
     "database": "postgres",
     "user": "postgres",
-    "password": "Mydatabase1391",
+    "password": "megaine11",
     "port": '5432'
 }
 
@@ -165,7 +108,51 @@ def delete_booking_from_database(booking_id): # Funktion som kollar om booking_i
         print("Error deleting booking:", e) # Vid anslutningsfel eller felaktig syntax i sql-fråga.
         return False
     
+@app.route("/padelbookingconfirmed.html", methods=["POST"])
+def de_booking():
+    activity = request.form.get("activity")
+    datetime = request.form.get("datetime")
+    email = request.form.get("email")
+    phone = request.form.get("phone")
+    input_data = (activity, datetime, email, phone)
+    if input_data:
+        if booking_confirmed(activity, datetime, email, phone):
+            return render_template("padelbookingconfirmed.html", message="Bokningsinformationen har lagts till.")
+        else:
+            return render_template("padelbookingconfirmed.html", message="Det gick inte att lägga till bokningsinformationen.")
+    else:
+        return render_template("padelbookingconfirmed.html", message="Nödvändiga uppgifter saknas.")
 
+
+def booking_confirmed(activity, datetime, email, phone):
+    try:
+        conn = psycopg2.connect(**conn_details)
+        cur = conn.cursor()
+
+        while True:
+            random_number = random.randint(000000, 999999)
+
+            # Kontrollera om det slumpmässiga numret redan finns i databasen
+            cur.execute("SELECT * FROM bookinginformation WHERE booking_id = %s", (random_number,))
+            result = cur.fetchone()
+
+            if result:
+                print(f"{random_number} finns i databasen.")
+            else:
+                print(f"{random_number} finns inte i databasen.")
+                break
+
+        # Sätt in bokningsinformationen i databasen med det slumpmässiga boknings-id
+        cur.execute("INSERT INTO bookinginformation (booking_id, activity, datetime, email, phone) VALUES (%s, %s, %s, %s, %s)",
+                    (random_number, activity, datetime, email, phone))
+        conn.commit()
+        cur.close()
+        conn.close()
+        return True
+    except psycopg2.Error as e:
+        print("Error inserting booking information:", e)
+        return False
+    
 
 
 
