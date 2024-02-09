@@ -20,9 +20,37 @@ def render_contact():
 def render_cancellation():
     return render_template("cancellation.html")
 
+import re
+
 @app.route("/confirmationcontact.html", methods=["POST"])
 def render_confirmationcontact():
-    return render_template("confirmationcontact.html", message="<span style='color: white;'>Tack för ditt mail, vi återkommer inom kort.</span>")
+    if request.method == 'POST':
+        # Regex-mönster för att validera e-postadress
+        email_pattern = r'^[\w\.-]+@[\w\.-]+\.\w+$'
+        # Regex-mönster för att validera telefonnummer (exakt 10 siffror)
+        phone_pattern = r'^\d{10}$'
+        # Regex-mönster för att validera meddelandet (minst 3 tecken)
+        message_pattern = r'^[a-zA-ZåäöÅÄÖ]{3,}$'
+
+
+        # Validera e-postadress
+        if not re.match(email_pattern, request.form['email']):
+            return render_template("/confirmationcontact.html", message="<span style='color: white;'>Felaktig e-postadress!</span>")
+
+        # Validera telefonnummer
+        if not re.match(phone_pattern, request.form['telefon']):
+            return render_template("/confirmationcontact.html", message="<span style='color: white;'>Felaktigt telefonnummer, fyll i 10 siffror!</span>")
+
+        # Validera meddelandet
+        if not re.match(message_pattern, request.form['message']):
+            return render_template("/confirmationcontact.html", message="<span style='color: white;'>Meddelandet måste vara minst 3 tecken långt!</span>")
+
+        # Om allt är korrekt, spara formulärdata och rendera bekräftelse
+        with open('meddelanden.txt', 'a', encoding='utf-8') as file:
+            file.write(f"{request.form['email']}, {request.form['telefon']}, {request.form['message']}\n")
+        return render_template("/confirmationcontact.html", message="<span style='color: white;'>Tack för ditt mail, vi återkommer inom kort.</span>")
+    else:
+        return 'Metoden är inte tillåten'
 
 @app.route("/boka.html", methods=["GET"])
 def render_padelbooking():
