@@ -9,6 +9,19 @@
     <style>
         .custom-button {
         float: right;
+        margin-top: -20px;
+        margin-bottom: 0px;
+        padding: 10px 20px;
+        border: none;
+        background-color: #0097b2;
+        color: white;
+        border-radius: 5px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+        transition: transform 0.3s ease;
+        cursor: pointer;
+    }
+    .custom-button2 {
+        float: left;
         margin-top: -35px;
         margin-bottom: 0px;
         padding: 10px 20px;
@@ -32,6 +45,14 @@
             border-radius: 10px;
             box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5); /* Shadow effect */
             text-align: center; /* Text placement center */
+        }
+    .custom-button:hover {
+        transform: translateY(-2px); /* Button move up when hover */
+        box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.5); /* Increasing shadoweffect while hovering over button */
+    }
+    .custom-button2:hover {
+            transform: translateY(-2px); /* Button move up when hover */
+            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.5); /* Increasing shadoweffect while hovering over button */
         }
 
     </style>
@@ -74,11 +95,19 @@
             <br>
             <button type="submit" class="custom-button">Logga in</button>
         </form>
-    
+        
+        <br>
+        <form action="/registration.html" method="post">
+            <button type="submit" class="custom-button2">Registrera konto</button>
+        </form>
+            
     </div>
-
-
+   
 </div>
+
+   
+
+
 
 <!-- Footer -->
 <footer>
