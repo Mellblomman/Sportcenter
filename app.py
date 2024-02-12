@@ -13,13 +13,48 @@ app.secret_key = os.urandom(24)
 def render_index():
     return render_template("index.html")
 
+
+
 @app.route("/inloggning.html", methods=["POST"])
 def render_inloggning():
     return render_template("inloggning.html")
 
+
 @app.route("/inloggad.html", methods=["POST", "GET"])
 def render_inloggad():
-    return render_template("inloggad.html")
+    if request.method == "POST":
+        email = request.form.get("email")
+        password = request.form.get("password")
+
+        if email and password: 
+            if login_credentials_check(email, password):
+                return render_template("inloggad.html", message="Välkommen", email=email)
+            else:
+                return render_template("inloggning.html", message="Felaktiga inloggningsuppgifter. Var god försök igen eller skapa ett nytt konto")
+        else:
+            return render_template("inloggning.html")
+    else:
+        # Om det inte är en POST-förfrågan, returnera bara inloggningssidan
+        return render_template("inloggning.html")
+
+def login_credentials_check(email, password):
+    try:
+        conn = psycopg2.connect(**conn_details)
+        cur = conn.cursor()
+        cur.execute("SELECT password, email FROM inloggningsuppgifter WHERE email = %s AND password = %s", (email, password,))
+        user_info = cur.fetchall()
+        cur.close()
+        conn.close()
+        if user_info:
+            print(user_info)  # Kontrollera om användaren finns i databasen
+            return True
+        print(user_info)
+        return False
+    except psycopg2.Error as e:
+        print("Error checking login credentials:", e)
+        return False
+
+
 
 @app.route("/bookings.html", methods=["POST", "GET"])
 def render_bookings():
@@ -85,7 +120,7 @@ conn_details = {
     "host": "localhost",
     "database": "postgres",
     "user": "postgres",
-    "password": "Mydatabase1391",
+    "password": "megaine11",
     "port": '5432'
 }
 
