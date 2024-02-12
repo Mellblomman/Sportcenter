@@ -16,6 +16,14 @@ CREATE TABLE bookinginformation (
     PRIMARY KEY(booking_id, datetime)
 );
 
+CREATE TABLE inloggningsuppgifter(
+    email VARCHAR(255),
+    password VARCHAR(30),
+    phone VARCHAR(20),
+    admin BOOLEAN NOT NULL
+);
+
+
 -- Får ut datum tid utan sekunder och minuter
 SELECT TO_CHAR(datetime, 'YYYY-MM-DD HH24') AS formatted_timestamp
 FROM court;
@@ -26,6 +34,9 @@ INSERT INTO court(activity, price, datetime, availability)VALUES
 
 INSERT INTO bookinginformation(booking_id, activity, datetime, email, phone)VALUES
 ('3', 'Tennis', '2024-01-12 20:35:20', 'mattias@outlook.com','073123456');
+
+INSERT INTO inloggningsuppgifter(email, PASSWORD, phone, ADMIN)VALUES
+('mattias@outlook.com','Test123','073123456', FALSE);
 
 DELETE FROM bookinginformation WHERE booking_id = 3;
 
