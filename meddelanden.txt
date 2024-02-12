@@ -1,3 +1,1 @@
-a@gmail.com, 0000000000, ���
-x@x.com, 0000000000, åäö
-x@x.com, 0000000000, aaa
+x@x.com, 0000000000, Testar så att det funkar att skriva långa meningar
