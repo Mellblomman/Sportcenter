@@ -120,7 +120,7 @@ conn_details = {
     "host": "localhost",
     "database": "postgres",
     "user": "postgres",
-    "password": "megaine11",
+    "password": "Mydatabase1391",
     "port": '5432'
 }
 
@@ -211,5 +211,35 @@ def booking_confirmed(activity, datetime, email, phone):
         print("Error inserting booking information:", e)
         return False
     
+@app.route("/logincancellation.html", methods=["GET"])
+def render_logincancellation():
+    return render_template("logincancellation.html")
+
+
+@app.route("/loginconfirmationcancellation.html", methods=["GET"])
+def render_loginconfirmationcancellation():
+    return render_template("loginconfirmationcancellation.html.html")
+
+@app.route("/loginboka.html", methods=["GET"])
+def render_loginboka():
+    return render_template("loginboka.html")
+
+@app.route("/loginbookingconfirmed.html", methods=["GET"])
+def render_loginbookingconfirmed():
+    return render_template("loginbookingconfirmed.html")
+
+@app.route("/loginconfirmationcontact.html", methods=["GET"])
+def render_loginconfirmationcontact():
+    return render_template("loginconfirmationcontact.html")
+
+@app.route("/logincontact.html", methods=["GET"])
+def render_logincontact():
+    return render_template("logincontact.html")
+
+@app.route("/loginindex.html", methods=["GET"])
+def render_loginindex():
+    return render_template("loginindex.html")
+
+
 if __name__ == "__main__":
     app.run(debug=True)   
