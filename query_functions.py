@@ -95,3 +95,24 @@ def cancel_booking(booking_id):
     conn.commit()
 
     conn.close()
+
+def get_filtered_bookings(email):
+    conn = psycopg2.connect(
+        host="localhost",
+        database="postgres",
+        user="postgres",
+        password="6969",
+        port='5432'
+    )
+    
+    cursor = conn.cursor()
+
+    query = f"SELECT bookinginformation.booking_id, bookinginformation.activity, bookinginformation.datetime, bookinginformation.email, bookinginformation.phone
+        FROM bookinginformation
+        JOIN court ON bookinginformation.activity = court.activity
+        WHERE bookinginformation.email = {email};"
+    
+    cursor.execute(query)
+    conn.commit()
+
+    conn.close()
