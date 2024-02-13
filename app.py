@@ -54,7 +54,9 @@ def login_credentials_check(email, password):
         print("Error checking login credentials:", e)
         return False
 
-
+@app.route("/activities.html", methods=["POST", "GET"])
+def render_activities():
+    return render_template("activities.html")
 
 @app.route("/bookings.html", methods=["POST", "GET"])
 def render_bookings():
