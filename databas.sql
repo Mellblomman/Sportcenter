@@ -16,13 +16,15 @@ CREATE TABLE bookinginformation (
     PRIMARY KEY(booking_id, datetime)
 );
 
-CREATE TABLE inloggningsuppgifter(
+CREATE TABLE inloggningsuppgifter (
     email VARCHAR(255),
     password VARCHAR(30),
-    phone VARCHAR(20),
-    admin BOOLEAN NOT NULL
+    phone VARCHAR(10),
+    admin boolean DEFAULT 'FALSE'
 );
 
+DROP TABLE inloggningsuppgifter;
+INSERT INTO inloggningsuppgifter VALUES ('hej@gmail.com', 'abc123', '0000000000');
 
 -- Får ut datum tid utan sekunder och minuter
 SELECT TO_CHAR(datetime, 'YYYY-MM-DD HH24') AS formatted_timestamp

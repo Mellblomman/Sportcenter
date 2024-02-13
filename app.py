@@ -64,11 +64,6 @@ def render_bookings():
 def render_registration():
     return render_template("registration.html")
 
-@app.route("/registrationstatus.html", methods=["POST", "GET"])
-def render_registrationstatus():
-    return render_template("registrationstatus.html")
-
-
 @app.route("/contact.html", methods=["GET"])
 def render_contact():
     return render_template("contact.html")
@@ -120,7 +115,7 @@ conn_details = {
     "host": "localhost",
     "database": "postgres",
     "user": "postgres",
-    "password": "megaine11",
+    "password": "Mydatabase1391",
     "port": '5432'
 }
 
@@ -311,6 +306,58 @@ def de_login_booking():
             return render_template("loginbookingconfirmed.html", message="Det gick inte att lägga till bokningsinformationen.")
     else:
         return render_template("loginbookingconfirmed.html", message="Nödvändiga uppgifter saknas.")  # Vi når aldrig denna???    
+
+
+@app.route("/registrationstatus.html", methods=["GET", "POST"])
+def register_user_status():
+    if request.method == "POST":
+        email = request.form.get("email")
+        password = request.form.get("password")
+        phone = request.form.get("phone")
+        input_data = (email, password, phone)
+
+        # Regex-mönster för att validera e-postadress
+        email_pattern = r"^[\w\.-]+@[\w\.-]+\.\w+$"
+        # Regex-mönster för att validera meddelandet (minst 5 tecken)
+        password_pattern = r"^(?=\s*\S)(.{5,}(?:\s+\S+){0,30}\s*)$"
+        # Regex-mönster för att validera telefonnummer (exakt 10 siffror)
+        phone_pattern = r"^\d{10}$"
+        
+
+        # Validera e-postadress
+        if not re.match(email_pattern, request.form["email"]):
+            return render_template("/registration.html", message="<span style='color: white;'>Felaktig e-postadress!</span>")
+
+        # Validera telefonnummer
+        if not re.match(phone_pattern, request.form["phone"]):
+            return render_template("/registration.html", message="<span style='color: white;'>Felaktigt telefonnummer, fyll i 10 siffror!</span>")
+
+        # Validera meddelandet
+        if not re.match(password_pattern, request.form["password"]):
+            return render_template("/registration.html", message="<span style='color: white;'>Lösenordet behöver vara minst 5 tecken långt!</span>")
+
+        if input_data:
+            try:
+                conn = psycopg2.connect(**conn_details)
+                cur = conn.cursor()
+                cur.execute("INSERT INTO inloggningsuppgifter (email, password, phone) VALUES (%s, %s, %s)",
+                            (email, password, phone))
+                conn.commit()
+                cur.close()
+                conn.close()
+                return render_template("registrationstatus.html", message="Konto skapat, var god logga in")
+            except psycopg2.Error as e:
+                print("Error inserting user information:", e)
+                return render_template("registrationstatus.html", message="Ett fel uppstod vid registreringen. Vänligen försök igen senare.")
+        else:
+            return render_template("registrationstatus.html", message="Nödvändiga uppgifter saknas")
+
+    # Om det är en GET-förfrågan (sidan laddas för första gången)
+    return render_template("registrationstatus.html", message="Fyll i dina önskade uppgifter")
+
+
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)   
