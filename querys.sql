@@ -22,3 +22,8 @@ WHERE booking_id = your_booking_id;
 
 DELETE FROM bookings
 WHERE booking_id = your_booking_id;
+
+SELECT bookinginformation.booking_id, bookinginformation.activity, bookinginformation.datetime, bookinginformation.email, bookinginformation.phone
+FROM bookinginformation
+JOIN court ON bookinginformation.activity = court.activity
+WHERE bookinginformation.email = 'example_email';
