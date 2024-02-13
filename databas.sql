@@ -16,13 +16,13 @@ CREATE TABLE bookinginformation (
     PRIMARY KEY(booking_id, datetime)
 );
 
-CREATE TABLE inloggningsuppgifter(
+-- Här sparas ens inlogningsuppgifter
+CREATE TABLE inloggningsuppgifter (
     email VARCHAR(255),
     password VARCHAR(30),
-    phone VARCHAR(20),
-    admin BOOLEAN NOT NULL
+    phone VARCHAR(10),
+    admin boolean DEFAULT 'FALSE'
 );
-
 
 -- Får ut datum tid utan sekunder och minuter
 SELECT TO_CHAR(datetime, 'YYYY-MM-DD HH24') AS formatted_timestamp
@@ -38,7 +38,11 @@ INSERT INTO bookinginformation(booking_id, activity, datetime, email, phone)VALU
 INSERT INTO inloggningsuppgifter(email, PASSWORD, phone, ADMIN)VALUES
 ('mattias@outlook.com','Test123','073123456', FALSE);
 
+DROP TABLE inloggningsuppgifter;
+INSERT INTO inloggningsuppgifter VALUES ('hej@gmail.com', 'abc123', '0000000000');
+
 DELETE FROM bookinginformation WHERE booking_id = 3;
 
+-- För att droppa alla tables
 CREATE SCHEMA public;
 DROP SCHEMA public CASCADE;
