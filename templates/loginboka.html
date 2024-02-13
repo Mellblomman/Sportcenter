@@ -85,6 +85,18 @@
         text-align: center;
         }
 
+        .custom-button2 {
+        float: right;
+        margin-top: -35px;
+        margin-bottom: 0px;
+        padding: 10px 20px;
+        border: none;
+        background-color: #0097b2;
+        color: white;
+        border-radius: 5px;
+
+    }
+
 
     </style>
 </head>
@@ -95,7 +107,7 @@
     <header>
         <h1>Devops Sportcenter</h1>
     </header>
-    
+    <button type="submit" class="custom-button2">Inloggad</button>
     <!-- Navigation -->
     <nav>
         <a href="/loginindex.html">Start</a>
@@ -105,7 +117,7 @@
         </div>
         <a href="/logincontact.html">Kontakt</a>
         <a href="/logincancellation.html">Avbokning</a>
-        <a href="/loginbookings.html">Mina bokningar</a>
+        <a href="/bookings.html">Mina bokningar</a>
     </nav>
     
 <div class="container">
@@ -154,7 +166,7 @@
               alert('Selected Date and Time: ' + selectedDateTime);
 
               // Omdirigera användaren till den bekräftelsesidan
-              window.location.href = "bookingconfirmed.html";
+              window.location.href = "loginbookingconfirmed.html";
             });
           </script>
 
