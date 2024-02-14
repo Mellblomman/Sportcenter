@@ -30,3 +30,7 @@ WHERE bookinginformation.email = 'example_email';
 
 SELECT * FROM inloggningsuppgifter
 WHERE email = 'user_email' AND password = 'user_password';
+
+SELECT datetime FROM court
+WHERE activity = %s AND availability = TRUE
+ORDER BY datetime;

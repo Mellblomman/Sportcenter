@@ -128,3 +128,28 @@ def get_filtered_bookings(email):
     conn.commit()
 
     conn.close()
+
+
+def get_available_time_slots():
+    activity = request.args.get('activity')
+
+    if not activity:
+        return jsonify({"error": "Activity parameter is required"}), 400
+
+    # Read database credentials from the JSON file
+    credentials = read_credentials('path/to/credentials.json')
+
+    # Define the SELECT query with parameterized query
+    query = """
+        SELECT datetime FROM court
+        WHERE activity = %s AND availability = TRUE
+        ORDER BY datetime;
+    """
+
+    # Execute the query and return the results as JSON
+    results = execute_query(query, (activity,), credentials)
+    
+    # Extracting datetime values from the result
+    time_slots = [result[0] for result in results]
+
+    return jsonify({"available_time_slots": time_slots})
