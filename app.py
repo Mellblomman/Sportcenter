@@ -210,20 +210,20 @@ def booking_confirmed(activity, datetime, email, phone):
     except psycopg2.Error as e:
         print("Error inserting booking information:", e)
         return False
-    
+# Ny ej testad   
 def booking_confirmed(new_bookingid, activity, datetime, email, phone):
     try:
         conn = psycopg2.connect(**conn_details)
         cur = conn.cursor()
 
-        # Ta bort den befintliga bokningen baserat på det angivna bokningsnumret
+        # plockar bort den gammla bookningen
         cur.execute("DELETE FROM bookinginformation WHERE booking_id = %s", (new_bookingid,))
         conn.commit()
-
+        #Fungerar ungefär likadant som den andra booknings id där den generar fram ett nytt
         while True:
             new_bookingid = random.randint(000000, 999999)
 
-            # Kontrollera om det slumpmässiga numret redan finns i databasen
+            #kollar om det nya booknings id finns eller inte inför den nya bookningen
             cur.execute("SELECT * FROM bookinginformation WHERE booking_id = %s", (new_bookingid,))
             result = cur.fetchone()
 
@@ -233,7 +233,7 @@ def booking_confirmed(new_bookingid, activity, datetime, email, phone):
                 print(f"{new_bookingid} finns inte i databasen.")
                 break
 
-        # Sätt in bokningsinformationen i databasen med det slumpmässiga boknings-id
+        # Sätt in bokningsinformationen i databasen med det nya slumpmässiga boknings-id
         cur.execute("INSERT INTO bookinginformation (booking_id, activity, datetime, email, phone) VALUES (%s, %s, %s, %s, %s)",
                     (new_bookingid, activity, datetime, email, phone))
         conn.commit()
@@ -241,7 +241,7 @@ def booking_confirmed(new_bookingid, activity, datetime, email, phone):
         conn.close()
         return True
     except psycopg2.Error as e:
-        print("Error inserting booking information:", e)
+        print("något gick fel", e)
         return False
 if __name__ == "__main__":
     app.run(debug=True)   
