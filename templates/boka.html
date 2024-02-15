@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Devops Sportcenter</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        
+        .container {
+        display: center;
+        justify-content: center;
+    }
+    /* Button style for send button */
+    .custom-button {
+        margin-top: 10px;
+        margin-bottom: 10px;
+        padding: 10px 20px;
+        border: none;
+        background-color: #0097b2;
+        color: white;
+        border-radius: 5px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+        transition: transform 0.3s ease;
+        cursor: pointer;
+    }
+
+        .custom-button:hover {
+            transform: translateY(-2px); /* Button move up when hover */
+            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.5); /* Increasing shadoweffect while hovering over button */
+        }
+        
+        #message {
+            max-width: 600px; /* Text width */
+            margin: 170px auto 50px; /* Placement farther down and in */
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5); /* Shadow effect */
+            text-align: center; /* Text placement center */
+        }
+
+        .calendar-container {
+            position: absolute;
+            top: 200px; /* Justera kalenderns vertikala placering */
+            left: 20px;
+        }
+
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+        }
+        .calendar-day {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+        }
+        .calendar-day:hover {
+            background-color: #f0f0f0;
+        }
+        .selected {
+            background-color: #007bff;
+            color: #fff;
+        }
+        .info {
+            display: none;
+            position: absolute;
+            top: calc(100% + 5px);
+            left: 0;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 10px;
+            z-index: 1000;
+        }
+        .calendar-day:hover .info {
+            display: block;
+        }
+
+        label[for="times"] {
+        font-weight: bold;
+        color: white;
+        text-align: center;
+        }
+
+
+    </style>
+</head>
+<body>  
+    <!-- Picture in the middle of the page -->
+    <img class="center-image" src="/static/sportcenter.png" alt="Sportcenter">
+    <!-- Header -->
+    <header>
+        <h1>Devops Sportcenter</h1>
+    </header>
+    
+    <!-- Navigation -->
+    <nav>
+        <a href="/">Start</a>
+        <div class="dropdown">
+            <a href="/boka.html" class="dropdown">Boka</a>
+        
+        </div>
+        <a href="/contact.html">Kontakt</a>
+        <a href="/cancellation.html">Avbokning</a>
+    </nav>
+    
+<div class="container">
+    <div id="message">
+        <span style="color: white; font-weight: bold;">{{ message | safe }}</span>
+    
+        <h2 style="color: white;">Fyll i dina uppgifter</h2>
+        <br>
+        <form action="/bookingconfirmed.html" method="post">
+            <input type="text" name="email" class="text-input" placeholder="Email">
+            <br> <!-- Newline -->
+            <br>
+            <input type="text" name="phone" class="text-input" placeholder="Telefonnummer">
+            <br> <!-- Newline -->
+            <br>
+            <label for="activity" style="font-weight: bold; color: white;">Välj sport:</label>
+            <select name="activity" class="text-input">
+                <option value="Padel">Padel</option>
+                <option value="Tennis">Tennis</option>
+                <option value="Handboll">Handboll</option>
+                <option value="Fotboll">Fotboll</option>
+                <option value="Badminton">Badminton</option>
+            </select>
+            <br> <!-- Newline -->
+            <br>
+            <h4 style="color: white;">Ange datum: </h4>
+            <input type="text" name="datetime" class="text-input" style="text-align: center;" placeholder="'YYYY-MM-DD HH:MM'">
+
+            <br> <!-- Newline -->
+            <br>
+            <button type="submit" class="custom-button">Bekräfta</button>
+        </form>
+    
+    </div>
+
+        <script>
+            document.getElementById('submitBtn').addEventListener('click', function() {
+              // Hämta det valda datumet och tiden
+              var selectedDate = document.getElementById('date').value;
+              var selectedTime = document.getElementById('time').value;
+
+              // Lägg till en standardtid ("00:00:00") eftersom vi inte har minuter och sekunder
+              var selectedDateTime = new Date(selectedDate + 'T' + selectedTime + ':00:00');
+
+              // Visa det valda datumet och tiden
+              alert('Selected Date and Time: ' + selectedDateTime);
+
+              // Omdirigera användaren till den bekräftelsesidan
+              window.location.href = "bookingconfirmed.html";
+            });
+          </script>
+
+
+</body>
+</html>
+
+
