@@ -13,6 +13,9 @@ app.secret_key = os.urandom(24)
 def render_index():
     return render_template("index.html")
 
+@app.route("/adminpage.html", methods=["GET", "POST"])
+def render_adminpage():
+    return render_template("adminpage.html")
 
 
 @app.route("/inloggning.html", methods=["POST"])
@@ -29,7 +32,11 @@ def render_inloggad():
 
         if email and password: 
             if login_credentials_check(email, password):
-                return render_template("inloggad.html", message="Välkommen", email=email)
+                admin_status = admin_or_not(email)
+                if admin_status:
+                    return render_template("adminpage.html")
+                else:
+                    return render_template("inloggad.html", message="Välkommen", email=email)
             else:
                 return render_template("inloggning.html", message="Felaktiga inloggningsuppgifter. Var god försök igen eller skapa ett nytt konto")
         else:
@@ -42,7 +49,7 @@ def login_credentials_check(email, password):
     try:
         conn = psycopg2.connect(**conn_details)
         cur = conn.cursor()
-        cur.execute("SELECT password, email FROM inloggningsuppgifter WHERE email = %s AND password = %s", (email, password,))
+        cur.execute("SELECT password, email, admin FROM inloggningsuppgifter WHERE email = %s AND password = %s", (email, password,))
         user_info = cur.fetchall()
         cur.close()
         conn.close()
@@ -54,6 +61,20 @@ def login_credentials_check(email, password):
     except psycopg2.Error as e:
         print("Error checking login credentials:", e)
         return False
+    
+def admin_or_not(email):
+    try:
+        conn = psycopg2.connect(**conn_details)
+        cur = conn.cursor()
+        cur.execute("SELECT admin FROM inloggningsuppgifter WHERE email = %s", (email,))
+        admin_status = cur.fetchone()[0]
+        cur.close()
+        conn.close()
+        return admin_status
+    except psycopg2.Error as e:
+        return None
+
+
 
 @app.route("/activities.html", methods=["POST", "GET"])
 def render_activities():
@@ -109,7 +130,7 @@ conn_details = {
     "host": "localhost",
     "database": "postgres",
     "user": "postgres",
-    "password": "Mydatabase1391",
+    "password": "megaine11",
     "port": '5432'
 }          
        
