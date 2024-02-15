@@ -5,9 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Devops Sportcenter</title>
     <link rel="stylesheet" href="/static/style.css">
-
     <style>
-        .custom-button {
+        .custom-button2 {
         float: right;
         margin-top: -35px;
         margin-bottom: 0px;
@@ -18,7 +17,6 @@
         border-radius: 5px;
 
     }
-    
     </style>
     
 </head>
@@ -30,11 +28,8 @@
 <!-- Header -->
 <header>
     <h1>Devops Sportcenter</h1>
-
 </header>
-<button type="submit" class="custom-button">Inloggad</button>
-
-
+<button type="submit" class="custom-button2">Inloggad</button>
 <!-- Navigation -->
 <nav>
     <a href="/loginindex.html">Start</a>
@@ -44,11 +39,17 @@
     </div>
     <a href="/logincontact.html">Kontakt</a>
     <a href="/logincancellation.html">Avbokning</a>
-    <a href="/loginbookings.html">Mina bokningar</a>
+    <a href="/bookings.html">Mina bokningar</a>
 </nav>
+
 
 <!-- Main content -->
 <div class="container">
+    <div id="message">
+        <span style="color: white; font-weight: bold;">{{ message | safe }}</span>
+        <p>Boknings ID: {{ booking_id }}</p>
+        <p>Datum och tid: {{ booking_datetime }}</p>
+    </div>
 </div>
 
 <!-- Footer -->

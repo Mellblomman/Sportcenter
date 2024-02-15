@@ -5,9 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Devops Sportcenter</title>
     <link rel="stylesheet" href="/static/style.css">
-
     <style>
-        .custom-button {
+        /* Adjusting style to place text down and more centered */
+        #message {
+            max-width: 600px; /* Width on text */
+            margin: 100px auto 50px; /* Adjust text down and more centered */
+            background-color: rgba(0, 0, 0, 0.5); /* Background color for text more transparent */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5); /* Shadoweffect */
+            text-align: center; /* Center text */
+        }
+    
+        .custom-button2 {
         float: right;
         margin-top: -35px;
         margin-bottom: 0px;
@@ -18,9 +28,8 @@
         border-radius: 5px;
 
     }
-    
+
     </style>
-    
 </head>
 <body>
 
@@ -30,10 +39,8 @@
 <!-- Header -->
 <header>
     <h1>Devops Sportcenter</h1>
-
 </header>
-<button type="submit" class="custom-button">Inloggad</button>
-
+<button type="submit" class="custom-button2">Inloggad</button>
 
 <!-- Navigation -->
 <nav>
@@ -44,11 +51,12 @@
     </div>
     <a href="/logincontact.html">Kontakt</a>
     <a href="/logincancellation.html">Avbokning</a>
-    <a href="/loginbookings.html">Mina bokningar</a>
+    <a href="/bookings.html">Mina bokningar</a>
 </nav>
 
 <!-- Main content -->
-<div class="container">
+<div id="message">
+    <span style="color: white; font-weight: bold;">{{ message | safe }}</span>
 </div>
 
 <!-- Footer -->
