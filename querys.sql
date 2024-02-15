@@ -39,3 +39,5 @@ SELECT activity, datetime
 FROM court
 WHERE availability = true AND activity = 'your_specific_activity'
 ORDER BY datetime;
+
+SELECT activity FROM court;

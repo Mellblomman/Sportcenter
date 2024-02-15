@@ -120,24 +120,13 @@
     <div id="result"></div>
 
     <div class="container">
-        <!-- Loop över alla sporter -->
-        {% for sport, price in sports.items() %}
-            <details>
-                <summary>
-                    <h3>{{ sport }}</h3>
-                </summary>
-                <!-- Beskrivning av sporten -->
-                <p>{{ sports[sport] }}</p>
-                <!-- Pris för sporten -->
-                <p>Pris per timme: {{ price }}</p>
-            </details>
-            <form action="/inloggning.html" method="post">
-                <button type="submit" class="custom-button">Boka här</button>
-            </form>
-            <hr>
-            <hr>
-            <br>
-        {% endfor %}
+        <label for="activities">Aktiviteter:</label>
+
+        <select name="activities" id="activities">
+            {% for activity in activities %}
+                <option value={{activity}}>{{activity}}</option>
+            {% endfor %}
+        </select>
     </div>
             
         </div>

@@ -78,7 +78,11 @@ def admin_or_not(email):
 
 @app.route("/activities.html", methods=["POST", "GET"])
 def render_activities():
-    return render_template("activities.html")
+    activities = fetch_activities_from_database()
+    if activities is not None:
+        return render_template("activities.html", activities=activities)
+    else:
+        return render_template("activites.html", message="Inga aktiviteter hittades.")
 
 #@app.route("/bookings.html", methods=["POST", "GET"])
 #def render_bookings():
@@ -130,7 +134,7 @@ conn_details = {
     "host": "localhost",
     "database": "postgres",
     "user": "postgres",
-    "password": "megaine11",
+    "password": "DITT LÖSENORD",
     "port": '5432'
 }          
        
@@ -346,6 +350,19 @@ def fetch_user_bookings_from_database(email):
         return user_bookings
     except psycopg2.Error as e:
         print("Error fetching user bookings:", e)
+        return None
+    
+def fetch_activities_from_database():
+    try:
+        conn = psycopg2.connect(**conn_details)
+        cur = conn.cursor()
+        cur.execute("SELECT activity FROM court")
+        activities = cur.fetchall()
+        cur.close()
+        conn.close()
+        return activities
+    except psycopg2.Error as e:
+        print("Error fetching activities:", e)
         return None
 
 
