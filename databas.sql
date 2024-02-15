@@ -3,9 +3,9 @@ CREATE TABLE court (
     activity VARCHAR(10) PRIMARY KEY,
     price int,
     datetime TIMESTAMP,
-    availability BOOLEAN NOT NULL
+    availability BOOLEAN DEFAULT 'TRUE'
 );
-
+DROP TABLE court;
 -- Här sparas ens personuppgifter
 CREATE TABLE bookinginformation (
     booking_id INT,
@@ -23,9 +23,9 @@ CREATE TABLE inloggningsuppgifter (
     admin boolean DEFAULT 'FALSE'
 );
 
-UPDATE inloggningsuppgifter
-SET admin = TRUE
-WHERE email = 'admin@gmail.com';
+UPDATE court
+SET price = 100
+WHERE activity ='testsport';
 DROP TABLE inloggningsuppgifter;
 INSERT INTO inloggningsuppgifter VALUES ('hej@gmail.com', 'abc123', '0000000000');
 

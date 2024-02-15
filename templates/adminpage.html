@@ -70,9 +70,39 @@
 </nav>
 
 <!-- Main content -->
+<div class="container">
+
+    <!-- Contact form -->
+    <h2 style="color: white;">Lägg till en aktivitet</h2>
+    <br>
+    <form action="/adminpage.html" method="post">
+        <input type="text" name="activity" class="text-input" placeholder="Aktivitet" required><br><br>
+        <input type="text" name="price" class="text-input" placeholder="Pris" required><br><br>
+        <input type="text" name="datetime" class="text-input" placeholder="'YYYY-MM-DD HH:MM'" required><br><br>
+        
+        <input type="submit" name="add_activity" value="Lägg till en aktivitet">
+    </form>
+    <br>
+    <h2 style="color: white;">Ta bort en aktivitet</h2>
+    <br>
+    <form action="/adminpage.html" method="post">
+        <input type="text" name="activity" class="text-input" placeholder="Aktivitet" required><br><br>
+        <input type="submit" name="delete_activity" value="Ta bort aktivitet">
+    </form>
+    <br>
+    <h2 style="color: white;">Ändra pris på aktivitet</h2>
+    <br>
+    <form action="/adminpage.html" method="post">
+        <input type="text" name="activity" class="text-input" placeholder="Aktivitet" required><br><br>
+        <input type="text" name="price" class="text-input" placeholder="Pris" required><br><br>
+        <input type="submit" name="Nytt pris" value="Skicka">
+    </form>
+    <br>
+</div>
 <div id="message">
     <span style="color: white; font-weight: bold;">{{ message | safe }}</span>
 </div>
+
 <!-- Footer -->
 <footer>
     <p>&copy; 2024 Devops Sportcenter. Alla rättigheter förbehållna.</p>

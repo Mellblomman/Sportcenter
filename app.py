@@ -13,9 +13,72 @@ app.secret_key = os.urandom(24)
 def render_index():
     return render_template("index.html")
 
-@app.route("/adminpage.html", methods=["POST", "GET"])
+@app.route("/adminpage.html", methods=["POST", "GET", "PUT"])
 def render_adminpage():
+    activity = request.form.get("activity")
+    price = request.form.get("price")
+    datetime = request.form.get("datetime")
+    
+    if 'add_activity' in request.form:
+        if 'Lägg till en aktivitet' in request.form.values():
+            if admin_add_activity(activity, price, datetime):
+                return render_template("adminpage.html", message="Aktivitet tillagd")
+            else:
+                return render_template("adminpage.html", message="Något gick fel med att lägga till aktivitet")
+              
+    elif 'Ta bort aktivitet' in request.form.values():
+        if admin_delete_activity(activity):
+            return render_template("adminpage.html", message="Aktivitet raderad")
+        else:
+            return render_template("adminpage.html", message="Något gick fel med att radera aktiviteten")
+    elif 'Nytt pris' in request.form.values():
+        if admin_change_price(activity, price):
+            return render_template("adminpage.html", message="Priset uppdaterat")
+        else:
+            return render_template("adminpage.html", message="Något gick fel med att uppdatera priset")
+
     return render_template("adminpage.html", message="Välkommen Admin")
+
+def admin_add_activity(activity, price, datetime):
+    try:
+        conn = psycopg2.connect(**conn_details)
+        cur = conn.cursor()
+        cur.execute("INSERT INTO court (activity, price, datetime) VALUES (%s, %s, %s)",
+                    (activity, price, datetime,))
+        conn.commit()
+        cur.close()
+        conn.close()
+        return True
+    except psycopg2.Error as e:
+        print("Error checking login credentials:", e)
+        return False
+
+def admin_delete_activity(activity):
+    try:
+        conn = psycopg2.connect(**conn_details)
+        cur = conn.cursor()
+        cur.execute("DELETE FROM court WHERE activity = %s", (activity,))
+        conn.commit()
+        cur.close()
+        conn.close()
+        return True
+    except psycopg2.Error as e:
+        print("Error checking login credentials:", e)
+        return False
+
+def admin_change_price(activity, price):
+    try:
+        conn = psycopg2.connect(**conn_details)
+        cur = conn.cursor()
+        cur.execute("UPDATE court SET price = %s WHERE activity = %s", (price, activity))
+        conn.commit()
+        cur.close()
+        conn.close()
+        return True
+    except psycopg2.Error as e:
+        print("Error checking login credentials:", e)
+        return False
+
 
 
 @app.route("/inloggning.html", methods=["POST"])
