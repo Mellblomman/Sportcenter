@@ -13,9 +13,9 @@ app.secret_key = os.urandom(24)
 def render_index():
     return render_template("index.html")
 
-@app.route("/adminpage.html", methods=["GET", "POST"])
+@app.route("/adminpage.html", methods=["POST", "GET"])
 def render_adminpage():
-    return render_template("adminpage.html")
+    return render_template("adminpage.html", message="Välkommen Admin")
 
 
 @app.route("/inloggning.html", methods=["POST"])
@@ -34,7 +34,7 @@ def render_inloggad():
             if login_credentials_check(email, password):
                 admin_status = admin_or_not(email)
                 if admin_status:
-                    return render_template("adminpage.html")
+                    return redirect(url_for('render_adminpage'))
                 else:
                     return render_template("inloggad.html", message="Välkommen", email=email)
             else:
