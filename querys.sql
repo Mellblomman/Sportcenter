@@ -34,3 +34,8 @@ WHERE email = 'user_email' AND password = 'user_password';
 SELECT datetime FROM court
 WHERE activity = %s AND availability = TRUE
 ORDER BY datetime;
+
+SELECT activity, datetime
+FROM court
+WHERE availability = true AND activity = 'your_specific_activity'
+ORDER BY datetime;

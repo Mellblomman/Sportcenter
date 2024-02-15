@@ -8,11 +8,7 @@
     <link rel="stylesheet" href="/static/style.css">
     <style>
         
-        nav {
-            display: flex;
-            justify-content: center;
-            padding: 1px;
-        }
+
 
         /* Button style for send button */
         .custom-button {
@@ -89,17 +85,14 @@
 
     <!-- Header -->
     <header>
-        <h1>DevOps Sportcenter</h1>
+        <h1>Devops Sportcenter</h1>
     </header>
 
     <!-- Navigation -->
     <nav>
         <a href="/">Start</a>
         <a href="activities.html">Våra aktiviteter</a>
-        <a href="/boka.html">Boka</a>
         <a href="/contact.html">Kontakt</a>
-        <a href="/cancellation.html">Avbokning</a>
-        <a href="/inloggning.html"></a>
     </nav>
 
     <!-- Main content -->
@@ -129,7 +122,9 @@
                 <p>Padel har blivit en av de snabbast växande sporterna globalt. Allt fler människor upptäcker och blir förtjusta i spelet, vilket skapar en växande och inkluderande gemenskap av padelentusiaster.</p>
                 <h4>Sammanfattningsvis erbjuder padel en underhållande och givande upplevelse...</h4>
             </details>
-            <button type="submit" class="custom-button" onclick="location.href='inloggning.html'">BOKA HÄR</button>
+            <form action="/inloggning.html" method="post">
+                <button type="submit" class="custom-button">Boka här</button>
+            </form>
             <hr>
             <hr>
             <br>
@@ -148,11 +143,8 @@
         </div>
 
 <!-- Footer -->
-<br>
-<br>
-
 <footer>
-    <p>&copy; 2023 DevOps Sportcenter</p>
+    <p>&copy; 2024 Devops Sportcenter. Alla rättigheter förbehållna.</p>
 </footer>
 
 </body>

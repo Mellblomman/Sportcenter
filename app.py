@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, url_for, session, redirect
+from flask import Flask, request, render_template, url_for, session, redirect, jsonify
 import os
 import re
 import psycopg2
@@ -13,6 +13,9 @@ app.secret_key = os.urandom(24)
 def render_index():
     return render_template("index.html")
 
+@app.route("/adminpage.html", methods=["GET", "POST"])
+def render_adminpage():
+    return render_template("adminpage.html")
 
 
 @app.route("/inloggning.html", methods=["POST"])
@@ -25,10 +28,15 @@ def render_inloggad():
     if request.method == "POST":
         email = request.form.get("email")
         password = request.form.get("password")
+        session["email"] = email
 
         if email and password: 
             if login_credentials_check(email, password):
-                return render_template("inloggad.html", message="Välkommen", email=email)
+                admin_status = admin_or_not(email)
+                if admin_status:
+                    return render_template("adminpage.html")
+                else:
+                    return render_template("inloggad.html", message="Välkommen", email=email)
             else:
                 return render_template("inloggning.html", message="Felaktiga inloggningsuppgifter. Var god försök igen eller skapa ett nytt konto")
         else:
@@ -41,7 +49,7 @@ def login_credentials_check(email, password):
     try:
         conn = psycopg2.connect(**conn_details)
         cur = conn.cursor()
-        cur.execute("SELECT password, email FROM inloggningsuppgifter WHERE email = %s AND password = %s", (email, password,))
+        cur.execute("SELECT password, email, admin FROM inloggningsuppgifter WHERE email = %s AND password = %s", (email, password,))
         user_info = cur.fetchall()
         cur.close()
         conn.close()
@@ -53,14 +61,28 @@ def login_credentials_check(email, password):
     except psycopg2.Error as e:
         print("Error checking login credentials:", e)
         return False
+    
+def admin_or_not(email):
+    try:
+        conn = psycopg2.connect(**conn_details)
+        cur = conn.cursor()
+        cur.execute("SELECT admin FROM inloggningsuppgifter WHERE email = %s", (email,))
+        admin_status = cur.fetchone()[0]
+        cur.close()
+        conn.close()
+        return admin_status
+    except psycopg2.Error as e:
+        return None
+
+
 
 @app.route("/activities.html", methods=["POST", "GET"])
 def render_activities():
     return render_template("activities.html")
 
-@app.route("/bookings.html", methods=["POST", "GET"])
-def render_bookings():
-    return render_template("bookings.html")
+#@app.route("/bookings.html", methods=["POST", "GET"])
+#def render_bookings():
+    #return render_template("bookings.html")
 
 @app.route("/registration.html", methods=["POST", "GET"])
 def render_registration():
@@ -69,10 +91,6 @@ def render_registration():
 @app.route("/contact.html", methods=["GET"])
 def render_contact():
     return render_template("contact.html")
-
-@app.route("/cancellation.html", methods=["GET"])
-def render_cancellation():
-    return render_template("cancellation.html")
 
 @app.route("/confirmationcontact.html", methods=["POST"])
 def render_confirmationcontact():
@@ -108,30 +126,13 @@ def render_confirmationcontact():
     else:
         return "Metoden är inte tillåten"
 
-
-@app.route("/boka.html", methods=["GET"])
-def render_padelbooking():
-    return render_template("boka.html")
-
 conn_details = {
     "host": "localhost",
     "database": "postgres",
     "user": "postgres",
-    "password": "Mydatabase1391",
+    "password": "megaine11",
     "port": '5432'
-}
-
-@app.route("/confirmationcancellation.html", methods=["POST"])
-def delete_booking():
-    booking_id = request.form.get("booking_id") # Sparar datan användaren skriver in på hemsidan i booking_id variabeln
-    if booking_id:
-        if delete_booking_from_database(booking_id):
-            return render_template("confirmationcancellation.html", message="Avbokat")
-        else:
-            return render_template("confirmationcancellation.html", message="Hittade ingen bokning med det id")
-    else:
-        return render_template("confirmationcancellation.html", message="Inget bokningsid angivet")
-            
+}          
        
 def delete_booking_from_database(booking_id): # Funktion som kollar om booking_id finns i databasen och raderar
     try: # Anslutning till databas
@@ -150,34 +151,6 @@ def delete_booking_from_database(booking_id): # Funktion som kollar om booking_i
     except psycopg2.Error as e:
         print("Error deleting booking:", e) # Vid anslutningsfel eller felaktig syntax i sql-fråga.
         return False
-    
-@app.route("/bookingconfirmed.html", methods=["POST"])
-def de_booking():
-    activity = request.form.get("activity")
-    datetime = request.form.get("datetime")
-    email = request.form.get("email")
-    phone = request.form.get("phone")
-    input_data = (activity, datetime, email, phone)
-    
-    if input_data:
-        if booking_confirmed(activity, datetime, email, phone):
-            conn = psycopg2.connect(**conn_details)
-            cur = conn.cursor()
-            cur.execute("SELECT booking_id, datetime FROM bookinginformation WHERE email = %s", (email,))
-            booking_info = cur.fetchone()
-            cur.close()
-            conn.close()
-            if booking_info:
-                booking_id = booking_info[0]
-                booking_datetime = booking_info[1]
-                return render_template("bookingconfirmed.html", message="Bokningsinformationen har lagts till.", booking_id=booking_id, booking_datetime=booking_datetime)
-            else:
-                return render_template("bookingconfirmed.html", message="Ingen bokning hittades med den angivna e-postadressen.")
-        else:
-            return render_template("bookingconfirmed.html", message="Det gick inte att lägga till bokningsinformationen.")
-    else:
-        return render_template("bookingconfirmed.html", message="Nödvändiga uppgifter saknas.")  # Vi når aldrig denna???
-
 
 def booking_confirmed(activity, datetime, email, phone):
     try:
@@ -212,22 +185,9 @@ def booking_confirmed(activity, datetime, email, phone):
 def render_logincancellation():
     return render_template("logincancellation.html")
 
-
-@app.route("/loginconfirmationcancellation.html", methods=["GET"])
-def render_loginconfirmationcancellation():
-    return render_template("loginconfirmationcancellation.html.html")
-
 @app.route("/loginboka.html", methods=["GET"])
 def render_loginboka():
     return render_template("loginboka.html")
-
-@app.route("/loginbookingconfirmed.html", methods=["GET"])
-def render_loginbookingconfirmed():
-    return render_template("loginbookingconfirmed.html")
-
-@app.route("/loginconfirmationcontact.html", methods=["GET"])
-def render_loginconfirmationcontact():
-    return render_template("loginconfirmationcontact.html")
 
 @app.route("/logincontact.html", methods=["GET"])
 def render_logincontact():
@@ -237,7 +197,7 @@ def render_logincontact():
 def render_loginindex():
     return render_template("loginindex.html")
 
-@app.route("/loginconfirmationcancellation.html", methods=["POST"])
+@app.route("/loginconfirmationcancellation.html", methods=["POST","GET"])
 def delete_login_booking():
     booking_id = request.form.get("booking_id") # Sparar datan användaren skriver in på hemsidan i booking_id variabeln
     if booking_id:
@@ -248,7 +208,7 @@ def delete_login_booking():
     else:
         return render_template("loginconfirmationcancellation.html", message="Inget bokningsid angivet")
 
-@app.route("/loginconfirmationcontact.html", methods=["POST"])
+@app.route("/loginconfirmationcontact.html", methods=["POST", "GET"])
 def render_login_confirmationcontact():
     if request.method == "POST":
         # Kontrollera om filen meddelande.txt finns, annars skapas den
@@ -282,7 +242,7 @@ def render_login_confirmationcontact():
     else:
         return "Metoden är inte tillåten"
     
-@app.route("/loginbookingconfirmed.html", methods=["POST"])
+@app.route("/loginbookingconfirmed.html", methods=["POST", "GET"])
 def de_login_booking():
     activity = request.form.get("activity")
     datetime = request.form.get("datetime")
@@ -356,6 +316,39 @@ def register_user_status():
 
     # Om det är en GET-förfrågan (sidan laddas för första gången)
     return render_template("registrationstatus.html", message="Fyll i dina önskade uppgifter")
+
+
+
+@app.route("/bookings.html", methods=["GET", "POST"])
+def get_user_bookings():
+    # Här kan du använda sessionsinformationen eller någon form av autentisering för att identifiera den aktuella användaren
+    # Antag att användarens e-postadress är lagrad i sessionsvariabeln 'email'
+
+    if "email" in session:  # Förutsatt att du har lagrat användarens e-postadress i sessionsvariabeln 'email'
+        email = session["email"]
+        user_bookings = fetch_user_bookings_from_database(email)
+        if user_bookings is not None:
+            return render_template("bookings.html", bookings=user_bookings)
+        else:
+            return render_template("bookings.html", message="Inga bokningar hittades för den aktuella användaren.")
+    else:
+        return jsonify({"error": "Användaren är inte inloggad"}), 401  # 401 Unauthorized om användaren inte är inloggad
+
+
+def fetch_user_bookings_from_database(email):
+    try:
+        conn = psycopg2.connect(**conn_details)
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM bookinginformation WHERE email = %s", (email,))
+        user_bookings = cur.fetchall()
+        cur.close()
+        conn.close()
+        return user_bookings
+    except psycopg2.Error as e:
+        print("Error fetching user bookings:", e)
+        return None
+
+
 
 
 
