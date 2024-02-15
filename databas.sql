@@ -23,6 +23,9 @@ CREATE TABLE inloggningsuppgifter (
     admin boolean DEFAULT 'FALSE'
 );
 
+UPDATE inloggningsuppgifter
+SET admin = TRUE
+WHERE email = 'admin@gmail.com';
 DROP TABLE inloggningsuppgifter;
 INSERT INTO inloggningsuppgifter VALUES ('hej@gmail.com', 'abc123', '0000000000');
 

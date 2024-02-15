@@ -91,7 +91,7 @@
     <!-- Navigation -->
     <nav>
         <a href="/">Start</a>
-        <a href="activities.html">Våra aktiviteter</a>
+        <a href="/activities.html">Våra aktiviteter</a>
         <a href="/contact.html">Kontakt</a>
     </nav>
 
@@ -103,31 +103,10 @@
                 <summary>
                     <img src="/static/padel.png" alt="Padel">
                 </summary>
-                <br>
-                <h3>Padel erbjuder en unik och rolig upplevelse för alla, oavsett ålder eller färdighetsnivå:</h3>
-                <br>
-                <h4>Lättsamt och Snabbt:</h4>
-                <p>Padel är känt för sin tillgänglighet och enkelhet. Det tar inte lång tid att lära sig grunderna, vilket gör det till en perfekt sport för nybörjare. Snabbt spel och kortare poäng ger en intensiv och engagerande upplevelse.</p>
-                <h4>Socialt Samspel:</h4>
-                <p>Padel är en utmärkt social aktivitet. Spelet spelas i par, vilket främjar kamratskap och teamwork. Du kan njuta av matcherna tillsammans med vänner och familj och samtidigt förbättra dina färdigheter.</p>
-                <h4>Hälsosam Träning:</h4>
-                <p>Padel ger en effektiv träning samtidigt som den är skonsam för kroppen. Spelets intensitet främjar kondition, snabbhet och smidighet. Dessutom involverar det både kondition och styrketräning.</p>
-                <h4>Ingen Åldersbegränsning:</h4>
-                <p>Padel är en sport som passar alla åldersgrupper. Oavsett om du är ung eller gammal, kan du njuta av spelet och utveckla dina färdigheter över tid. Det är en aktivitet som främjar livslångt deltagande.</p>
-                <h4>Mindre Krav på Utrustning:</h4>
-                <p>Du behöver inte mycket utrustning för att börja spela padel. En padelracket och bollar är allt som krävs. De flesta padelklubbar tillhandahåller banor och utrustning, vilket gör det enkelt att komma igång.</p>
-                <h4>Taktiskt Spel:</h4>
-                <p>Padel kombinerar fysisk kondition med taktiskt tänkande. Att placera bollen strategiskt på banan och kommunicera med din partner är viktiga aspekter av spelet. Det ger en intellektuell utmaning samtidigt som du har roligt.</p>
-                <h4>En Expanderande Gemenskap:</h4>
-                <p>Padel har blivit en av de snabbast växande sporterna globalt. Allt fler människor upptäcker och blir förtjusta i spelet, vilket skapar en växande och inkluderande gemenskap av padelentusiaster.</p>
-                <h4>Sammanfattningsvis erbjuder padel en underhållande och givande upplevelse...</h4>
             </details>
             <form action="/inloggning.html" method="post">
                 <button type="submit" class="custom-button">Boka här</button>
             </form>
-            <hr>
-            <hr>
-            <br>
 
             <h2>Prislista per timme:</h2>
             <select id="product" name="product" required>
@@ -139,6 +118,27 @@
     </form>
 
     <div id="result"></div>
+
+    <div class="container">
+        <!-- Loop över alla sporter -->
+        {% for sport, price in sports.items() %}
+            <details>
+                <summary>
+                    <h3>{{ sport }}</h3>
+                </summary>
+                <!-- Beskrivning av sporten -->
+                <p>{{ sports[sport] }}</p>
+                <!-- Pris för sporten -->
+                <p>Pris per timme: {{ price }}</p>
+            </details>
+            <form action="/inloggning.html" method="post">
+                <button type="submit" class="custom-button">Boka här</button>
+            </form>
+            <hr>
+            <hr>
+            <br>
+        {% endfor %}
+    </div>
             
         </div>
 
