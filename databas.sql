@@ -47,3 +47,8 @@ DELETE FROM bookinginformation WHERE booking_id = 3;
 
 CREATE SCHEMA public;
 DROP SCHEMA public CASCADE;
+
+CREATE VIEW user_bookings_view AS
+    SELECT bi.*, c.price
+    FROM bookinginformation bi
+    JOIN court c ON bi.activity = c.activity;
