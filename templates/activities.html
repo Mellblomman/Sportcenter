@@ -7,78 +7,16 @@
     <title>DevOps Sportcenter</title>
     <link rel="stylesheet" href="/static/style.css">
     <style>
-        
-
-
-        /* Button style for send button */
-        .custom-button {
-            margin: 10px 0;
-            padding: 10px 20px;
-            border: none;
-            background-color: #0097b2;
-            color: white;
-            border-radius: 5px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s ease;
-            cursor: pointer;
+        #message {
+            max-width: 600px; /* Text width */
+            margin: 100px auto 50px; /* Placement farther down and in */
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5); /* Shadow effect */
+            text-align: center; /* Text placement center */
         }
-
-        .custom-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.5);
-        }
-
-        footer {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        details {
-            margin-top: 20px;
-        }
-
-        summary {
-            cursor: pointer;
-            padding: 5px;
-            background-color: #0097b2;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
-
-        summary:hover {
-            background-color: #007f99;
-        }
-
-        details[open] summary {
-            background-color: #007f99;
-        }
-
-        .container img {
-            width: 100%;
-            height: auto;
-            opacity: 0.8;
-        }
-
-        .container h1 {
-            color: white;
-            margin-top: 0;
-        }
-
-        /* Gemensam stil för alla sektioner */
-.container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: rgba(0, 0, 0, 0.8); /* Bakgrundsfärg med transparens för alla sektioner */
-    padding: 20px;
-    margin-top: 20px; /* Lägg till en margin-top för att separera från föregående sektion */
-    
-}
-
-</style>
-
+    </style>
 </head>
 
 <body>
@@ -96,45 +34,22 @@
     </nav>
 
     <!-- Main content -->
-
-        <!-- Padel Section -->
-            
-            <details>
-                <summary>
-                    <img src="/static/padel.png" alt="Padel">
-                </summary>
-            </details>
-            <form action="/inloggning.html" method="post">
-                <button type="submit" class="custom-button">Boka här</button>
-            </form>
-
-            <h2>Prislista per timme:</h2>
-            <select id="product" name="product" required>
-            <option value="aktiviteter">Prislista</option>
-            <option value="padel">Padel: 200:-</option>
-
-
-        </select>
-    </form>
-
-    <div id="result"></div>
-
     <div class="container">
-        <label for="activities">Aktiviteter:</label>
-
-        <select name="activities" id="activities">
-            {% for activity in activities %}
-                <option value={{activity}}>{{activity}}</option>
-            {% endfor %}
-        </select>
-    </div>
-            
+        <div id="message">
+            <span style="color: white; font-weight: bold;">{{ message }}</span>
+            <h2 style="color: white;">Aktiviteter</h2>
+            <select name="activities" id="activities">
+                {% for activity in activities %}
+                <option value="{{ activity }}">{{ activity }}</option>
+                {% endfor %}
+            </select>
         </div>
-
-<!-- Footer -->
-<footer>
-    <p>&copy; 2024 Devops Sportcenter. Alla rättigheter förbehållna.</p>
-</footer>
+    </div>
+    
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Devops Sportcenter. Alla rättigheter förbehållna.</p>
+    </footer>
 
 </body>
 

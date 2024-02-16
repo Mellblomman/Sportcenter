@@ -137,19 +137,26 @@ def admin_or_not(email):
     except psycopg2.Error as e:
         return None
 
-
-
-@app.route("/activities.html", methods=["POST", "GET"])
+@app.route("/activities.html", methods=["GET"])
 def render_activities():
     activities = fetch_activities_from_database()
-    if activities is not None:
+    if activities:
         return render_template("activities.html", activities=activities)
     else:
-        return render_template("activites.html", message="Inga aktiviteter hittades.")
+        return render_template("activities.html", message="Inga aktiviteter hittades.")
 
-#@app.route("/bookings.html", methods=["POST", "GET"])
-#def render_bookings():
-    #return render_template("bookings.html")
+def fetch_activities_from_database():
+    try:
+        conn = psycopg2.connect(**conn_details)
+        cur = conn.cursor()
+        cur.execute("SELECT TRIM(BOTH ',' FROM activity) FROM court")
+        activities = [row[0] for row in cur.fetchall()]  # Extrahera aktiviteterna från tuples
+        cur.close()
+        conn.close()
+        return activities
+    except psycopg2.Error as e:
+        print("Error fetching activities:", e)
+        return None
 
 @app.route("/registration.html", methods=["POST", "GET"])
 def render_registration():
@@ -197,7 +204,7 @@ conn_details = {
     "host": "localhost",
     "database": "postgres",
     "user": "postgres",
-    "password": "DITT LÖSENORD",
+    "password": "Mydatabase1391",
     "port": '5432'
 }          
        
@@ -415,23 +422,6 @@ def fetch_user_bookings_from_database(email):
         print("Error fetching user bookings:", e)
         return None
     
-def fetch_activities_from_database():
-    try:
-        conn = psycopg2.connect(**conn_details)
-        cur = conn.cursor()
-        cur.execute("SELECT activity FROM court")
-        activities = cur.fetchall()
-        cur.close()
-        conn.close()
-        return activities
-    except psycopg2.Error as e:
-        print("Error fetching activities:", e)
-        return None
-
-
-
-
-
 
 
 if __name__ == "__main__":
