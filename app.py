@@ -130,7 +130,7 @@ conn_details = {
     "host": "localhost",
     "database": "postgres",
     "user": "postgres",
-    "password": "megaine11",
+    "password": "9603",
     "port": '5432'
 }          
        
