@@ -204,7 +204,7 @@ conn_details = {
     "host": "localhost",
     "database": "postgres",
     "user": "postgres",
-    "password": "megaine11",
+    "password": "Mydatabase1391",
     "port": '5432'
 }          
        
@@ -360,7 +360,8 @@ def de_login_booking():
             if booking_info:
                 booking_id = booking_info[0]
                 booking_datetime = booking_info[1]
-                return render_template("loginbookingconfirmed.html", message="Bokningsinformationen har lagts till.", booking_id=booking_id, booking_datetime=booking_datetime)
+                booking_time = booking_info[2]
+                return render_template("loginbookingconfirmed.html", message="Bokningsinformationen har lagts till.", booking_id=booking_id, booking_datetime=booking_datetime, booking_time=booking_time)
             else:
                 return render_template("loginbookingconfirmed.html", message="Ingen bokning hittades med den angivna e-postadressen.")
         else:
