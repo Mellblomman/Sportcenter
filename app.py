@@ -204,7 +204,7 @@ conn_details = {
     "host": "localhost",
     "database": "postgres",
     "user": "postgres",
-    "password": "Mydatabase1391",
+    "password": "megaine11",
     "port": '5432'
 }          
        
@@ -226,7 +226,7 @@ def delete_booking_from_database(booking_id): # Funktion som kollar om booking_i
         print("Error deleting booking:", e) # Vid anslutningsfel eller felaktig syntax i sql-fråga.
         return False
 
-def booking_confirmed(activity, datetime, email, phone):
+def booking_confirmed(activity, date, time, email, phone):
     try:
         conn = psycopg2.connect(**conn_details)
         cur = conn.cursor()
@@ -245,8 +245,8 @@ def booking_confirmed(activity, datetime, email, phone):
                 break
 
         # Sätt in bokningsinformationen i databasen med det slumpmässiga boknings-id
-        cur.execute("INSERT INTO bookinginformation (booking_id, activity, datetime, email, phone) VALUES (%s, %s, %s, %s, %s)",
-                    (random_number, activity, datetime, email, phone))
+        cur.execute("INSERT INTO bookinginformation (booking_id, activity, date, time, email, phone) VALUES (%s, %s, %s, %s, %s, %s)",
+                    (random_number, activity, date, time, email, phone))
         conn.commit()
         cur.close()
         conn.close()
@@ -319,10 +319,11 @@ def render_login_confirmationcontact():
 @app.route("/loginbookingconfirmed.html", methods=["POST", "GET"])
 def de_login_booking():
     activity = request.form.get("activity")
-    datetime = request.form.get("datetime")
+    date  = request.form.get("date")
+    time = request.form.get("time")
     email = request.form.get("email")
     phone = request.form.get("phone")
-    input_data = (activity, datetime, email, phone)
+    input_data = (activity, date, time, email, phone)
 
     # Regex-mönster för att validera e-postadress
     email_pattern = r"^[\w\.-]+@[\w\.-]+\.\w+$"
@@ -339,10 +340,20 @@ def de_login_booking():
         return render_template("/loginboka.html", message="<span style='color: white;'>Felaktigt telefonnummer, fyll i 10 siffror!</span>")
     
     if input_data:
-        if booking_confirmed(activity, datetime, email, phone):
+        conn = psycopg2.connect(**conn_details)
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM bookinginformation WHERE activity = %s AND date = %s AND time = %s", (activity, date, time,))
+        available_time = cur.fetchone()
+        if available_time == None:
+            pass
+        else:
+            return redirect(url_for("render_loginbookingfail"))
+    
+    if input_data:
+        if booking_confirmed(activity, date, time, email, phone):
             conn = psycopg2.connect(**conn_details)
             cur = conn.cursor()
-            cur.execute("SELECT booking_id, datetime FROM bookinginformation WHERE email = %s AND datetime = %s", (email, datetime,))
+            cur.execute("SELECT booking_id, date, time FROM bookinginformation WHERE email = %s AND date = %s AND time = %s", (email, date, time,))
             booking_info = cur.fetchone()
             cur.close()
             conn.close()
@@ -357,6 +368,9 @@ def de_login_booking():
     else:
         return render_template("loginbookingconfirmed.html", message="Nödvändiga uppgifter saknas.")  # Vi når aldrig denna???    
 
+@app.route("/loginbookingfail.html", methods=["POST", "GET"])
+def render_loginbookingfail():
+    return render_template("loginbookingfail.html")
 
 @app.route("/registrationstatus.html", methods=["GET", "POST"])
 def register_user_status():

@@ -140,9 +140,29 @@
             </select>
             <br> <!-- Newline -->
             <br>
-            <h4 style="color: white;">Ange datum: </h4>
-            <input type="text" name="datetime" class="text-input" style="text-align: center;" placeholder="'YYYY-MM-DD HH:MM'">
-
+            <h4 style="color: white;">Ange datum och tid: </h4>
+            <div class="w-full sm:w-half formbold-px-3">
+                <div class="formbold-mb-5 w-full">
+                    <input
+                        type="date"
+                        name="date"
+                        id="date"
+                        class="formbold-form-input"
+                    />
+                </div>
+            </div>
+            <br>
+            <select name="time" class="text-input" id="time">
+                <option value="09:00">09:00</option>
+                <option value="10:00">10:00</option>
+                <option value="11:00">11:00</option>
+                <option value="12:00">12:00</option>
+                <option value="13:00">13:00</option>
+                <option value="14:00">14:00</option>
+                <option value="15:00">15:00</option>
+                <option value="16:00">16:00</option>
+                <option value="17:00">17:00</option>
+            </select>
             <br> <!-- Newline -->
             <br>
             <button type="submit" class="custom-button">Bekräfta</button>

@@ -1,20 +1,24 @@
 -- Här kan man lagra ban information
 CREATE TABLE court (
     activity VARCHAR(10) PRIMARY KEY,
-    price int,
-    datetime TIMESTAMP,
-    availability BOOLEAN DEFAULT 'TRUE'
+    price int
 );
-DROP TABLE court;
+INSERT INTO court VALUES('Padel', 250);
+DROP TABLE bookinginformation CASCADE;
+
 -- Här sparas ens personuppgifter
 CREATE TABLE bookinginformation (
-    booking_id INT,
-    activity VARCHAR(10), 
-    datetime TIMESTAMP,
-    email VARCHAR(255),
-    phone VARCHAR(20),
-    PRIMARY KEY(booking_id, datetime)
+    booking_id INT NOT NULL,
+    activity VARCHAR(10) NOT NULL,
+    date DATE NOT NULL,
+    time TIME NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    phone VARCHAR(20) NOT NULL,
+    PRIMARY KEY(activity, date, time)
 );
+
+INSERT INTO bookinginformation (booking_id, activity, date, time, email, phone)VALUES (12345, 'Tennis', '2024-03-03', '12:00', 'test@gmail.com', '0707929323');
+DROP TABLE bookinginformation CASCADE;
 
 CREATE TABLE inloggningsuppgifter (
     email VARCHAR(255),
