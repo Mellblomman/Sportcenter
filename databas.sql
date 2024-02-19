@@ -35,7 +35,7 @@ FROM court;
 
 -- Test
 INSERT INTO court(activity, price, datetime, availability)VALUES
-('Tennis', 150, '2024-01-12 20:35:20', TRUE);
+('Fotboll', 150, '2024-01-12 20:35:20', TRUE);
 
 INSERT INTO bookinginformation(booking_id, activity, datetime, email, phone)VALUES
 ('3', 'Tennis', '2024-01-12 20:35:20', 'mattias@outlook.com','073123456');

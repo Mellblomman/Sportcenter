@@ -342,7 +342,7 @@ def de_login_booking():
         if booking_confirmed(activity, datetime, email, phone):
             conn = psycopg2.connect(**conn_details)
             cur = conn.cursor()
-            cur.execute("SELECT booking_id, datetime FROM bookinginformation WHERE email = %s", (email,))
+            cur.execute("SELECT booking_id, datetime FROM bookinginformation WHERE email = %s AND datetime = %s", (email, datetime,))
             booking_info = cur.fetchone()
             cur.close()
             conn.close()
