@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Devops Sportcenter</title>
+    <link rel="stylesheet" href="/static/style.css">
+
+    <style>
+        .custom-button {
+        float: right;
+        margin-top: -35px;
+        margin-bottom: 0px;
+        padding: 10px 20px;
+        border: none;
+        background-color: #0097b2;
+        color: white;
+        border-radius: 5px;
+
+    }
+
+    #message {
+            max-width: 600px; /* Text width */
+            margin: 100px auto 50px; /* Placement farther down and in */
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5); /* Shadow effect */
+            text-align: center; /* Text placement center */
+        }
+    
+    </style>
+    
+</head>
+<body>
+
+<!-- Picture middle of screen -->
+<img class="center-image" src="/static/sportcenter.png" alt="Sportcenter">
+
+<!-- Header -->
+<header>
+    <h1>Devops Sportcenter</h1>
+
+</header>
+<button type="submit" class="custom-button">Inloggad</button>
+
+
+<!-- Navigation -->
+<nav>
+    <a href="/loginindex.html">Start</a>
+    <a href="/loginboka.html">Boka</a>
+    <a href="/logincontact.html">Kontakt</a>
+    <a href="/logincancellation.html">Avbokning</a>
+    <a href="/bookings.html">Mina bokningar</a>
+</nav>
+
+<!-- Main content -->
+<div id="message">
+    <span style="color: white; font-weight: bold;">{{ message | safe }}</span>
+</div>
+
+<!-- Footer -->
+<footer>
+    <p>&copy; 2024 Devops Sportcenter. Alla rättigheter förbehållna.</p>
+</footer>
+
+</body>
+</html>

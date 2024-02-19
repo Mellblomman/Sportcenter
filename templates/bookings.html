@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Devops Sportcenter</title>
+    <link rel="stylesheet" href="/static/style.css">
+
+    <style>
+        .custom-button {
+            float: right;
+            margin-top: -35px;
+            margin-bottom: 0px;
+            padding: 10px 20px;
+            border: none;
+            background-color: #0097b2;
+            color: white;
+            border-radius: 5px;
+        }
+
+        .custom-button2 {
+        float: right;
+        margin-top: -35px;
+        margin-bottom: 0px;
+        padding: 10px 20px;
+        border: none;
+        background-color: #0097b2;
+        color: white;
+        border-radius: 5px;
+
+    }
+    </style>
+    
+</head>
+<body>
+
+<!-- Picture middle of screen -->
+<img class="center-image" src="/static/sportcenter.png" alt="Sportcenter">
+
+<!-- Header -->
+<header>
+    <h1>Devops Sportcenter</h1>
+</header>
+<button type="submit" class="custom-button2">Inloggad</button>
+<!-- Navigation -->
+<nav>
+    <a href="/loginindex.html">Start</a>
+    <a href="/loginboka.html">Boka</a>
+    <a href="/logincontact.html">Kontakt</a>
+    <a href="/logincancellation.html">Avbokning</a>
+    <a href="/bookings.html">Mina bokningar</a>
+</nav>
+
+<!-- Main content -->
+<div class="container">
+    <h2 style="color: white;">Mina bokningar</h2>
+    <div id="bookings">
+        {% if bookings %}
+            <table>
+                <tr>
+                    <th style="padding-right: 20px; color: white;">Bokningsnr</th>
+                    <th style="padding-right: 20px; color: white;">Aktivitet</th>
+                    <th style="padding-right: 40px; color: white;">Datum och tid</th>
+                    <th style="padding-right: 40px; color: white;">Pris</th>
+                    <!-- Lägg till andra kolumnrubriker efter behov -->
+                </tr>
+                <br>
+                {% for booking in bookings %}
+                <tr>
+                    <td style="color: white;">{{ booking[0] }}</td>
+                    <td style="color: white;">{{ booking[1] }}</td>
+                    <td style="color: white;">{{ booking[2].strftime("%Y-%m-%d %H:%M") }}</td>
+                    <td style="color: white;">{{ booking[5] }}</td>
+                    <!-- Lägg till andra kolumnvärden efter behov -->
+                </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <p style="color: white;">{{ message }}</p>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Footer -->
+<footer>
+    <p>&copy; 2024 Devops Sportcenter. Alla rättigheter förbehållna.</p>
+</footer>
+
+</body>
+</html>
