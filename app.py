@@ -13,9 +13,72 @@ app.secret_key = os.urandom(24)
 def render_index():
     return render_template("index.html")
 
-@app.route("/adminpage.html", methods=["GET", "POST"])
+@app.route("/adminpage.html", methods=["POST", "GET", "PUT"])
 def render_adminpage():
-    return render_template("adminpage.html")
+    activity = request.form.get("activity")
+    price = request.form.get("price")
+    datetime = request.form.get("datetime")
+    
+    if 'add_activity' in request.form:
+        if 'Lägg till en aktivitet' in request.form.values():
+            if admin_add_activity(activity, price, datetime):
+                return render_template("adminpage.html", message="Aktivitet tillagd")
+            else:
+                return render_template("adminpage.html", message="Något gick fel med att lägga till aktivitet")
+              
+    elif 'Ta bort aktivitet' in request.form.values():
+        if admin_delete_activity(activity):
+            return render_template("adminpage.html", message="Aktivitet raderad")
+        else:
+            return render_template("adminpage.html", message="Något gick fel med att radera aktiviteten")
+    elif 'Nytt pris' in request.form.values():
+        if admin_change_price(activity, price):
+            return render_template("adminpage.html", message="Priset uppdaterat")
+        else:
+            return render_template("adminpage.html", message="Något gick fel med att uppdatera priset")
+
+    return render_template("adminpage.html", message="Välkommen Admin")
+
+def admin_add_activity(activity, price, datetime):
+    try:
+        conn = psycopg2.connect(**conn_details)
+        cur = conn.cursor()
+        cur.execute("INSERT INTO court (activity, price, datetime) VALUES (%s, %s, %s)",
+                    (activity, price, datetime,))
+        conn.commit()
+        cur.close()
+        conn.close()
+        return True
+    except psycopg2.Error as e:
+        print("Error checking login credentials:", e)
+        return False
+
+def admin_delete_activity(activity):
+    try:
+        conn = psycopg2.connect(**conn_details)
+        cur = conn.cursor()
+        cur.execute("DELETE FROM court WHERE activity = %s", (activity,))
+        conn.commit()
+        cur.close()
+        conn.close()
+        return True
+    except psycopg2.Error as e:
+        print("Error checking login credentials:", e)
+        return False
+
+def admin_change_price(activity, price):
+    try:
+        conn = psycopg2.connect(**conn_details)
+        cur = conn.cursor()
+        cur.execute("UPDATE court SET price = %s WHERE activity = %s", (price, activity))
+        conn.commit()
+        cur.close()
+        conn.close()
+        return True
+    except psycopg2.Error as e:
+        print("Error checking login credentials:", e)
+        return False
+
 
 
 @app.route("/inloggning.html", methods=["POST"])
@@ -34,7 +97,7 @@ def render_inloggad():
             if login_credentials_check(email, password):
                 admin_status = admin_or_not(email)
                 if admin_status:
-                    return render_template("adminpage.html")
+                    return redirect(url_for('render_adminpage'))
                 else:
                     return render_template("inloggad.html", message="Välkommen", email=email)
             else:
@@ -74,15 +137,26 @@ def admin_or_not(email):
     except psycopg2.Error as e:
         return None
 
-
-
-@app.route("/activities.html", methods=["POST", "GET"])
+@app.route("/activities.html", methods=["GET"])
 def render_activities():
-    return render_template("activities.html")
+    activities = fetch_activities_from_database()
+    if activities:
+        return render_template("activities.html", activities=activities)
+    else:
+        return render_template("activities.html", message="Inga aktiviteter hittades.")
 
-#@app.route("/bookings.html", methods=["POST", "GET"])
-#def render_bookings():
-    #return render_template("bookings.html")
+def fetch_activities_from_database():
+    try:
+        conn = psycopg2.connect(**conn_details)
+        cur = conn.cursor()
+        cur.execute("SELECT TRIM(BOTH ',' FROM activity) FROM court")
+        activities = [row[0] for row in cur.fetchall()]  # Extrahera aktiviteterna från tuples
+        cur.close()
+        conn.close()
+        return activities
+    except psycopg2.Error as e:
+        print("Error fetching activities:", e)
+        return None
 
 @app.route("/registration.html", methods=["POST", "GET"])
 def render_registration():
@@ -130,7 +204,7 @@ conn_details = {
     "host": "localhost",
     "database": "postgres",
     "user": "postgres",
-    "password": "9603",
+    "password": "Mydatabase1391",
     "port": '5432'
 }          
        
@@ -254,7 +328,7 @@ def de_login_booking():
         if booking_confirmed(activity, datetime, email, phone):
             conn = psycopg2.connect(**conn_details)
             cur = conn.cursor()
-            cur.execute("SELECT booking_id, datetime FROM bookinginformation WHERE email = %s", (email,))
+            cur.execute("SELECT booking_id, datetime FROM bookinginformation WHERE email = %s AND datetime = %s", (email, datetime,))
             booking_info = cur.fetchone()
             cur.close()
             conn.close()
@@ -339,7 +413,7 @@ def fetch_user_bookings_from_database(email):
     try:
         conn = psycopg2.connect(**conn_details)
         cur = conn.cursor()
-        cur.execute("SELECT * FROM bookinginformation WHERE email = %s", (email,))
+        cur.execute("SELECT * FROM user_bookings_view WHERE email = %s", (email,))
         user_bookings = cur.fetchall()
         cur.close()
         conn.close()
@@ -347,11 +421,7 @@ def fetch_user_bookings_from_database(email):
     except psycopg2.Error as e:
         print("Error fetching user bookings:", e)
         return None
-
-
-
-
-
+    
 
 
 if __name__ == "__main__":

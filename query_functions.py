@@ -1,7 +1,7 @@
 import psycopg2
 
 #Update price
-def update_price(court_id, new_price):
+def update_price(activity, new_price):
     conn = psycopg2.connect(
         host="localhost",
         database="postgres",
@@ -11,7 +11,7 @@ def update_price(court_id, new_price):
     )
     cursor = conn.cursor()
 
-    query = f"UPDATE court SET price = {new_price} WHERE court_id = {court_id}"
+    query = f"UPDATE court SET price = {new_price} WHERE activity = {activity}"
 
     cursor.execute(query)
     conn.commit()
@@ -19,7 +19,7 @@ def update_price(court_id, new_price):
     conn.close()
 
 #Availability
-def toggle_availability(court_id):
+def toggle_availability(activity):
     conn = psycopg2.connect(
         host="localhost",
         database="postgres",
@@ -29,7 +29,7 @@ def toggle_availability(court_id):
     )
     cursor = conn.cursor()
 
-    query = f"UPDATE court SET availability = CASE WHEN availability = TRUE THEN FALSE ELSE TRUE END WHERE court_id = {court_id}"
+    query = f"UPDATE court SET availability = CASE WHEN availability = TRUE THEN FALSE ELSE TRUE END WHERE activity = {activity}"
 
     cursor.execute(query)
     conn.commit()
@@ -37,7 +37,7 @@ def toggle_availability(court_id):
     conn.close()
 
 #Add activity
-def add_activity(new_court_id, new_activity, new_datetime, new_price, new_availability):
+def add_activity(new_activity, new_datetime, new_price, new_availability):
     conn = psycopg2.connect(
         host="localhost",
         database="postgres",
@@ -47,7 +47,7 @@ def add_activity(new_court_id, new_activity, new_datetime, new_price, new_availa
     )
     cursor = conn.cursor()
 
-    query = f"INSERT INTO court (court_id, activity, datetime, price, availability) VALUES ({new_court_id}, {new_activity}, {new_datetime}, {new_price}, {new_availability})"
+    query = f"INSERT INTO court (court_id, activity, datetime, price, availability) VALUES ({new_activity}, {new_datetime}, {new_price}, {new_availability})"
 
     cursor.execute(query)
     conn.commit()
@@ -55,7 +55,7 @@ def add_activity(new_court_id, new_activity, new_datetime, new_price, new_availa
     conn.close()
 
 #Delete activity
-def delete_activity(court_id):
+def delete_activity(activity):
     conn = psycopg2.connect(
         host="localhost",
         database="postgres",
@@ -65,7 +65,7 @@ def delete_activity(court_id):
     )
     cursor = conn.cursor()
 
-    query = f"DELETE FROM court WHERE court_id = {court_id}"
+    query = f"DELETE FROM court WHERE activity = {activity}"
 
     cursor.execute(query)
     conn.commit()

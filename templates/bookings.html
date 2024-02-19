@@ -61,6 +61,7 @@
                     <th style="padding-right: 20px; color: white;">Bokningsnr</th>
                     <th style="padding-right: 20px; color: white;">Aktivitet</th>
                     <th style="padding-right: 40px; color: white;">Datum och tid</th>
+                    <th style="padding-right: 40px; color: white;">Pris</th>
                     <!-- Lägg till andra kolumnrubriker efter behov -->
                 </tr>
                 <br>
@@ -68,7 +69,8 @@
                 <tr>
                     <td style="color: white;">{{ booking[0] }}</td>
                     <td style="color: white;">{{ booking[1] }}</td>
-                    <td style="color: white;">{{ booking[2] }}</td>
+                    <td style="color: white;">{{ booking[2].strftime("%Y-%m-%d %H:%M") }}</td>
+                    <td style="color: white;">{{ booking[5] }}</td>
                     <!-- Lägg till andra kolumnvärden efter behov -->
                 </tr>
                 {% endfor %}

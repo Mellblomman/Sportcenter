@@ -3,9 +3,9 @@ CREATE TABLE court (
     activity VARCHAR(10) PRIMARY KEY,
     price int,
     datetime TIMESTAMP,
-    availability BOOLEAN NOT NULL
+    availability BOOLEAN DEFAULT 'TRUE'
 );
-
+DROP TABLE court;
 -- Här sparas ens personuppgifter
 CREATE TABLE bookinginformation (
     booking_id INT,
@@ -23,6 +23,9 @@ CREATE TABLE inloggningsuppgifter (
     admin boolean DEFAULT 'FALSE'
 );
 
+UPDATE court
+SET price = 100
+WHERE activity ='testsport';
 DROP TABLE inloggningsuppgifter;
 INSERT INTO inloggningsuppgifter VALUES ('hej@gmail.com', 'abc123', '0000000000');
 
@@ -44,3 +47,8 @@ DELETE FROM bookinginformation WHERE booking_id = 3;
 
 CREATE SCHEMA public;
 DROP SCHEMA public CASCADE;
+
+CREATE VIEW user_bookings_view AS
+    SELECT bi.*, c.price
+    FROM bookinginformation bi
+    JOIN court c ON bi.activity = c.activity;

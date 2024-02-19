@@ -7,81 +7,21 @@
     <title>DevOps Sportcenter</title>
     <link rel="stylesheet" href="/static/style.css">
     <style>
-        
-
-
-        /* Button style for send button */
-        .custom-button {
-            margin: 10px 0;
-            padding: 10px 20px;
-            border: none;
-            background-color: #0097b2;
-            color: white;
-            border-radius: 5px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s ease;
-            cursor: pointer;
+        #message {
+            max-width: 600px; /* Text width */
+            margin: 100px auto 50px; /* Placement farther down and in */
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5); /* Shadow effect */
+            text-align: center; /* Text placement center */
         }
-
-        .custom-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.5);
-        }
-
-        footer {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        details {
-            margin-top: 20px;
-        }
-
-        summary {
-            cursor: pointer;
-            padding: 5px;
-            background-color: #0097b2;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
-
-        summary:hover {
-            background-color: #007f99;
-        }
-
-        details[open] summary {
-            background-color: #007f99;
-        }
-
-        .container img {
-            width: 100%;
-            height: auto;
-            opacity: 0.8;
-        }
-
-        .container h1 {
-            color: white;
-            margin-top: 0;
-        }
-
-        /* Gemensam stil för alla sektioner */
-.container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: rgba(0, 0, 0, 0.8); /* Bakgrundsfärg med transparens för alla sektioner */
-    padding: 20px;
-    margin-top: 20px; /* Lägg till en margin-top för att separera från föregående sektion */
-    
-}
-
-</style>
-
+    </style>
 </head>
 
 <body>
+    <!-- Picture middle of screen -->
+<img class="center-image" src="/static/sportcenter.png" alt="Sportcenter">
 
     <!-- Header -->
     <header>
@@ -91,61 +31,27 @@
     <!-- Navigation -->
     <nav>
         <a href="/">Start</a>
-        <a href="activities.html">Våra aktiviteter</a>
+        <a href="/activities.html">Våra aktiviteter</a>
         <a href="/contact.html">Kontakt</a>
     </nav>
 
     <!-- Main content -->
-
-        <!-- Padel Section -->
-            
-            <details>
-                <summary>
-                    <img src="/static/padel.png" alt="Padel">
-                </summary>
-                <br>
-                <h3>Padel erbjuder en unik och rolig upplevelse för alla, oavsett ålder eller färdighetsnivå:</h3>
-                <br>
-                <h4>Lättsamt och Snabbt:</h4>
-                <p>Padel är känt för sin tillgänglighet och enkelhet. Det tar inte lång tid att lära sig grunderna, vilket gör det till en perfekt sport för nybörjare. Snabbt spel och kortare poäng ger en intensiv och engagerande upplevelse.</p>
-                <h4>Socialt Samspel:</h4>
-                <p>Padel är en utmärkt social aktivitet. Spelet spelas i par, vilket främjar kamratskap och teamwork. Du kan njuta av matcherna tillsammans med vänner och familj och samtidigt förbättra dina färdigheter.</p>
-                <h4>Hälsosam Träning:</h4>
-                <p>Padel ger en effektiv träning samtidigt som den är skonsam för kroppen. Spelets intensitet främjar kondition, snabbhet och smidighet. Dessutom involverar det både kondition och styrketräning.</p>
-                <h4>Ingen Åldersbegränsning:</h4>
-                <p>Padel är en sport som passar alla åldersgrupper. Oavsett om du är ung eller gammal, kan du njuta av spelet och utveckla dina färdigheter över tid. Det är en aktivitet som främjar livslångt deltagande.</p>
-                <h4>Mindre Krav på Utrustning:</h4>
-                <p>Du behöver inte mycket utrustning för att börja spela padel. En padelracket och bollar är allt som krävs. De flesta padelklubbar tillhandahåller banor och utrustning, vilket gör det enkelt att komma igång.</p>
-                <h4>Taktiskt Spel:</h4>
-                <p>Padel kombinerar fysisk kondition med taktiskt tänkande. Att placera bollen strategiskt på banan och kommunicera med din partner är viktiga aspekter av spelet. Det ger en intellektuell utmaning samtidigt som du har roligt.</p>
-                <h4>En Expanderande Gemenskap:</h4>
-                <p>Padel har blivit en av de snabbast växande sporterna globalt. Allt fler människor upptäcker och blir förtjusta i spelet, vilket skapar en växande och inkluderande gemenskap av padelentusiaster.</p>
-                <h4>Sammanfattningsvis erbjuder padel en underhållande och givande upplevelse...</h4>
-            </details>
-            <form action="/inloggning.html" method="post">
-                <button type="submit" class="custom-button">Boka här</button>
-            </form>
-            <hr>
-            <hr>
-            <br>
-
-            <h2>Prislista per timme:</h2>
-            <select id="product" name="product" required>
-            <option value="aktiviteter">Prislista</option>
-            <option value="padel">Padel: 200:-</option>
-
-
-        </select>
-    </form>
-
-    <div id="result"></div>
-            
+    <div class="container">
+        <div id="message">
+            <span style="color: white; font-weight: bold;">{{ message }}</span>
+            <h2 style="color: white;">Aktiviteter</h2>
+            <select name="activities" id="activities">
+                {% for activity in activities %}
+                <option value="{{ activity }}">{{ activity }}</option>
+                {% endfor %}
+            </select>
         </div>
-
-<!-- Footer -->
-<footer>
-    <p>&copy; 2024 Devops Sportcenter. Alla rättigheter förbehållna.</p>
-</footer>
+    </div>
+    
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Devops Sportcenter. Alla rättigheter förbehållna.</p>
+    </footer>
 
 </body>
 
