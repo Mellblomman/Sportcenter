@@ -17,14 +17,13 @@ def render_index():
 def render_adminpage():
     activity = request.form.get("activity")
     price = request.form.get("price")
-    datetime = request.form.get("datetime")
     
-    if 'add_activity' in request.form:
-        if 'Lägg till en aktivitet' in request.form.values():
-            if admin_add_activity(activity, price, datetime):
-                return render_template("adminpage.html", message="Aktivitet tillagd")
-            else:
-                return render_template("adminpage.html", message="Något gick fel med att lägga till aktivitet")
+    
+    if 'Lägg till en aktivitet' in request.form.values():
+        if admin_add_activity(activity, price):
+            return render_template("adminpage.html", message="Aktivitet tillagd")
+        else:
+            return render_template("adminpage.html", message="Något gick fel med att lägga till aktivitet")
               
     elif 'Ta bort aktivitet' in request.form.values():
         if admin_delete_activity(activity):
@@ -39,12 +38,12 @@ def render_adminpage():
 
     return render_template("adminpage.html", message="Välkommen Admin")
 
-def admin_add_activity(activity, price, datetime):
+def admin_add_activity(activity, price):
     try:
         conn = psycopg2.connect(**conn_details)
         cur = conn.cursor()
-        cur.execute("INSERT INTO court (activity, price, datetime) VALUES (%s, %s, %s)",
-                    (activity, price, datetime,))
+        cur.execute("INSERT INTO court (activity, price) VALUES (%s, %s)",
+                    (activity, price,))
         conn.commit()
         cur.close()
         conn.close()
@@ -204,7 +203,7 @@ conn_details = {
     "host": "localhost",
     "database": "postgres",
     "user": "postgres",
-    "password": "Mydatabase1391",
+    "password": "megaine11",
     "port": '5432'
 }          
        

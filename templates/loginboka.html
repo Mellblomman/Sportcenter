@@ -132,11 +132,11 @@
             <br>
             <label for="activity" style="font-weight: bold; color: white;">Välj sport:</label>
             <select name="activity" class="text-input">
-                <option value="Padel">Padel</option>
-                <option value="Tennis">Tennis</option>
-                <option value="Handboll">Handboll</option>
-                <option value="Fotboll">Fotboll</option>
-                <option value="Badminton">Badminton</option>
+                <option value="Padel">Padel 200kr</option>
+                <option value="Tennis">Tennis 200kr</option>
+                <option value="Handboll">Handboll 200kr</option>
+                <option value="Fotboll">Fotboll 200kr</option>
+                <option value="Badminton">Badminton 200kr</option>
             </select>
             <br> <!-- Newline -->
             <br>
@@ -153,15 +153,15 @@
             </div>
             <br>
             <select name="time" class="text-input" id="time">
-                <option value="09:00">09:00</option>
-                <option value="10:00">10:00</option>
-                <option value="11:00">11:00</option>
-                <option value="12:00">12:00</option>
-                <option value="13:00">13:00</option>
-                <option value="14:00">14:00</option>
-                <option value="15:00">15:00</option>
-                <option value="16:00">16:00</option>
-                <option value="17:00">17:00</option>
+                <option value="09:00">09:00 - 10:00</option>
+                <option value="10:00">10:00 - 11:00</option>
+                <option value="11:00">11:00 - 12:00</option>
+                <option value="12:00">12:00 - 13:00</option>
+                <option value="13:00">13:00 - 14:00</option>
+                <option value="14:00">14:00 - 15:00</option>
+                <option value="15:00">15:00 - 16:00</option>
+                <option value="16:00">16:00 - 17:00</option>
+                <option value="17:00">17:00 - 18:00</option>
             </select>
             <br> <!-- Newline -->
             <br>
@@ -169,24 +169,6 @@
         </form>
     
     </div>
-
-        <script>
-            document.getElementById('submitBtn').addEventListener('click', function() {
-              // Hämta det valda datumet och tiden
-              var selectedDate = document.getElementById('date').value;
-              var selectedTime = document.getElementById('time').value;
-
-              // Lägg till en standardtid ("00:00:00") eftersom vi inte har minuter och sekunder
-              var selectedDateTime = new Date(selectedDate + 'T' + selectedTime + ':00:00');
-
-              // Visa det valda datumet och tiden
-              alert('Selected Date and Time: ' + selectedDateTime);
-
-              // Omdirigera användaren till den bekräftelsesidan
-              window.location.href = "loginbookingconfirmed.html";
-            });
-          </script>
-
 <footer>
     <p>&copy; 2024 Devops Sportcenter. Alla rättigheter förbehållna.</p>
 </footer>
