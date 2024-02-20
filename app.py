@@ -204,7 +204,7 @@ def de_login_booking():
         if available_time == None:
             pass
         else:
-            return redirect(url_for("render_loginbookingfail"))
+            return render_template("/loginboka.html", message="<span style='color: white;'>Tiden upptagen, välj en annan tid</span>")
     
     if input_data:
         if booking_confirmed(activity, date, time, email, phone):
