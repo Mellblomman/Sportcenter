@@ -40,50 +40,6 @@
             text-align: center; /* Text placement center */
         }
 
-        .calendar-container {
-            position: absolute;
-            top: 200px; /* Justera kalenderns vertikala placering */
-            left: 20px;
-        }
-
-        .calendar {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 5px;
-        }
-        .calendar-day {
-            padding: 10px;
-            border: 1px solid #ccc;
-            text-align: center;
-            cursor: pointer;
-            position: relative;
-        }
-        .calendar-day:hover {
-            background-color: #f0f0f0;
-        }
-        .selected {
-            background-color: #007bff;
-            color: #fff;
-        }
-        .info {
-            display: none;
-            position: absolute;
-            top: calc(100% + 5px);
-            left: 0;
-            background-color: #fff;
-            border: 1px solid #ccc;
-            padding: 10px;
-            z-index: 1000;
-        }
-        .calendar-day:hover .info {
-            display: block;
-        }
-
-        label[for="times"] {
-        font-weight: bold;
-        color: white;
-        text-align: center;
-        }
 
         .custom-button2 {
         float: right;
@@ -124,13 +80,16 @@
         <h2 style="color: white;">Fyll i dina uppgifter</h2>
         <br>
         <form action="/loginbookingconfirmed.html" method="post">
+            <h4 style="color: white;">Email: </h4>
             <input type="text" name="email" class="text-input" placeholder="Email">
             <br> <!-- Newline -->
             <br>
+            <h4 style="color: white;">Telefonnummer: </h4>
             <input type="text" name="phone" class="text-input" placeholder="Telefonnummer">
             <br> <!-- Newline -->
             <br>
             <label for="activity" style="font-weight: bold; color: white;">Välj sport:</label>
+            <br>
             <select name="activity" class="text-input">
                 <option value="Padel">Padel 200kr</option>
                 <option value="Tennis">Tennis 200kr</option>
@@ -140,7 +99,7 @@
             </select>
             <br> <!-- Newline -->
             <br>
-            <h4 style="color: white;">Ange datum och tid: </h4>
+            <h4 style="color: white;">Ange datum: </h4>
             <div class="w-full sm:w-half formbold-px-3">
                 <div class="formbold-mb-5 w-full">
                     <input
@@ -152,6 +111,7 @@
                 </div>
             </div>
             <br>
+            <h4 style="color: white;">Ange Tid: </h4>
             <select name="time" class="text-input" id="time">
                 <option value="09:00">09:00 - 10:00</option>
                 <option value="10:00">10:00 - 11:00</option>
