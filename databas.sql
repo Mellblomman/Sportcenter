@@ -1,22 +1,19 @@
--- Här kan man lagra ban information
+-- Viktiga tables
 CREATE TABLE court (
     activity VARCHAR(10) PRIMARY KEY,
-    price int,
-    datetime TIMESTAMP,
-    availability BOOLEAN NOT NULL
+    price int
 );
 
--- Här sparas ens personuppgifter
 CREATE TABLE bookinginformation (
-    booking_id INT,
-    activity VARCHAR(10), 
-    datetime TIMESTAMP,
-    email VARCHAR(255),
-    phone VARCHAR(20),
-    PRIMARY KEY(booking_id, datetime)
+    booking_id INT NOT NULL,
+    activity VARCHAR(10) NOT NULL,
+    date DATE NOT NULL,
+    time TIME NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    phone VARCHAR(20) NOT NULL,
+    PRIMARY KEY(activity, date, time)
 );
 
--- Här sparas ens inlogningsuppgifter
 CREATE TABLE inloggningsuppgifter (
     email VARCHAR(255),
     password VARCHAR(30),
@@ -24,25 +21,27 @@ CREATE TABLE inloggningsuppgifter (
     admin boolean DEFAULT 'FALSE'
 );
 
--- Får ut datum tid utan sekunder och minuter
-SELECT TO_CHAR(datetime, 'YYYY-MM-DD HH24') AS formatted_timestamp
-FROM court;
+CREATE VIEW user_bookings_view AS
+    SELECT bi.*, c.price
+    FROM bookinginformation bi
+    JOIN court c ON bi.activity = c.activity;
 
--- Test
-INSERT INTO court(activity, price, datetime, availability)VALUES
-('Tennis', 150, '2024-01-12 20:35:20', TRUE);
-
-INSERT INTO bookinginformation(booking_id, activity, datetime, email, phone)VALUES
-('3', 'Tennis', '2024-01-12 20:35:20', 'mattias@outlook.com','073123456');
-
+-- Skapa admin konto
 INSERT INTO inloggningsuppgifter(email, PASSWORD, phone, ADMIN)VALUES
-('mattias@outlook.com','Test123','073123456', FALSE);
+('--','--','--', TRUE);
 
-DROP TABLE inloggningsuppgifter;
-INSERT INTO inloggningsuppgifter VALUES ('hej@gmail.com', 'abc123', '0000000000');
+-- Viktiga inserts
+Insert INTO court(activity, price) VALUES
+('Tennis','200');
 
-DELETE FROM bookinginformation WHERE booking_id = 3;
+Insert INTO court(activity, price) VALUES
+('Handboll','200');
 
--- För att droppa alla tables
-CREATE SCHEMA public;
+
+
+-- Dropa alla tables
 DROP SCHEMA public CASCADE;
+CREATE SCHEMA public;
+
+
+

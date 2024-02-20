@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Devops Sportcenter</title>
+    <link rel="stylesheet" href="/static/style.css">
+
+    <style>
+        #message {
+            max-width: 600px; /* Width on text */
+            margin: 100px auto 50px; /* Adjust text down and more centered */
+            background-color: rgba(0, 0, 0, 0.5); /* Background color for text more transparent */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5); /* Shadoweffect */
+            text-align: center; /* Center text */
+        }
+        .custom-button {
+        float: right;
+        margin-top: -35px;
+        margin-bottom: 0px;
+        padding: 10px 20px;
+        border: none;
+        background-color: #0097b2;
+        color: white;
+        border-radius: 5px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+        transition: transform 0.3s ease;
+        cursor: pointer;
+    }
+    .custom-button:hover {
+            transform: translateY(-2px); /* Button move up when hover */
+            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.5); /* Increasing shadoweffect while hovering over button */
+        }
+        .custom-button2 {
+            margin-top: 10px; /* Added margin-top to separate buttons */
+            margin-bottom: 10px; /* Added margin-bottom to separate buttons */
+            padding: 10px 20px;
+            border: none;
+            background-color: #0097b2;
+            color: white;
+            border-radius: 5px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+        .custom-button2:hover {
+            transform: translateY(-2px); /* Button move up when hover */
+            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.5); /* Increasing shadoweffect while hovering over button */
+        }
+    </style>
+    
+</head>
+<body>
+
+<!-- Picture middle of screen -->
+<img class="center-image" src="/static/sportcenter.png" alt="Sportcenter">
+
+<!-- Header -->
+<header>
+    <h1>Devops Sportcenter</h1>
+</header>
+
+<form action="/" method="post">
+    <button type="submit" class="custom-button">Logga ut</button>
+</form>
+
+<!-- Navigation -->
+<nav>
+    <a href="/adminpage.html">Start</a>
+</nav>
+
+<!-- Main content -->
+<div class="container">
+    <div id="message">
+        <span style="color: white; font-weight: bold;">{{ message | safe }}</span>
+
+    <!-- Contact form -->
+    <h2 style="color: white;">Lägg till en aktivitet</h2>
+    <br>
+    <form action="/adminpage.html" method="post">
+        <input type="text" name="activity" class="text-input" placeholder="Aktivitet" required><br><br>
+        <input type="text" name="price" class="text-input" placeholder="Pris" required><br><br>
+        <button type="submit" class="custom-button2" name="add_activity" value="Lägg till en aktivitet">Lägg till aktivitet</button>
+    </form>
+    <br>
+    <h2 style="color: white;">Ta bort en aktivitet</h2>
+    <br>
+    <form action="/adminpage.html" method="post">
+        <input type="text" name="activity" class="text-input" placeholder="Aktivitet" required><br><br>
+        <button type="submit" class="custom-button2" name="delete_activity" value="Ta bort aktivitet">Ta bort aktivitet</button>
+    </form>
+    <br>
+    <h2 style="color: white;">Ändra pris på aktivitet</h2>
+    <br>
+    <form action="/adminpage.html" method="post">
+        <input type="text" name="activity" class="text-input" placeholder="Aktivitet" required><br><br>
+        <input type="text" name="price" class="text-input" placeholder="Pris" required><br><br>
+        <button type="submit" class="custom-button2" name="update_price" value="Nytt pris">Nytt pris</button>
+    </form>
+    <br>
+</div>
+
+
+
+<!-- Footer -->
+<footer>
+    <p>&copy; 2024 Devops Sportcenter. Alla rättigheter förbehållna.</p>
+</footer>
+
+</body>
+</html>

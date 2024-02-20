@@ -6,8 +6,7 @@
     <title>Devops Sportcenter</title>
     <link rel="stylesheet" href="/static/style.css">
     <style>
-        /* Button style for send button */
-        input[type="submit"] {
+        .custom-button {
             margin-top: 10px; /* Add space over button */
             margin-bottom: 10px; /* Add space under button */
             padding: 10px 20px; /* Adjust button padding */
@@ -17,15 +16,30 @@
             border-radius: 5px; /* Rounding buttons corners */
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); /* Add shadow on button */
             transition: transform 0.3s ease; /* Transform button */
+            cursor: pointer; /* Pointer to hand while hovering */
+            display: block; /* Button to block-element to move it under text field */
         }
 
-        input[type="submit"]:hover {
-            transform: translateY(-2px); /* button move up when hover */
+        .custom-button:hover {
+            transform: translateY(-2px); /* Button move up when hover */
             box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.5); /* Increasing shadoweffect while hovering over button */
         }
+        .custom-button2 {
+        float: right;
+        margin-top: -35px;
+        margin-bottom: 0px;
+        padding: 10px 20px;
+        border: none;
+        background-color: #0097b2;
+        color: white;
+        border-radius: 5px;
+
+    }
+    
     </style>
     
 </head>
+
 <body>
 
 <!-- Picture middle of screen -->
@@ -36,33 +50,27 @@
     <h1>Devops Sportcenter</h1>
 </header>
 
+<button type="submit" class="custom-button2">Inloggad</button>
 <!-- Navigation -->
 <nav>
-    <a href="/">Start</a>
-    <a href="/activities.html">Våra aktiviteter</a>
-    <a href="/contact.html">Kontakt</a>
+    <a href="/loginindex.html">Start</a>
+    <a href="/loginboka.html">Boka</a>
+    <a href="/logincontact.html">Kontakt</a>
+    <a href="/logincancellation.html">Avbokning</a>
+    <a href="/bookings.html">Mina bokningar</a>
 </nav>
 
-<!-- Main content -->
 <div class="container">
-
-    <!-- Contact form -->
-    <h2 style="color: white;">Kontakta oss</h2>
+    <h2 style="color: white;">Ange bokningsnummer</h2>
     <br>
-    <form action="/confirmationcontact.html" method="post">
-        <input type="text" name="email" class="text-input" placeholder="Email" required><br><br>
-        
-        <input type="text" name="telefon" class="text-input" placeholder="Telefonnummer" required><br><br>
-    
-        <textarea id="message" name="message" rows="5" style="width: 200px;" placeholder="Skriv ditt meddelande här..." required></textarea><br><br>
-        
-        <input type="submit" value="Skicka">
+    <form action="/loginconfirmationcancellation.html" method="post">
+        <input type="text" name="booking_id" class="text-input" placeholder="Bokningsnummer">
+        <br> <!-- Newline -->
+        <br>
+        <button type="submit" class="custom-button">Avboka</button>
     </form>
-    
-       
-
+    <div id="message"></div>
 </div>
-
 
 <!-- Footer -->
 <footer>

@@ -18,6 +18,16 @@
         border-radius: 5px;
 
     }
+
+    #message {
+            max-width: 600px; /* Text width */
+            margin: 100px auto 50px; /* Placement farther down and in */
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5); /* Shadow effect */
+            text-align: center; /* Text placement center */
+        }
     
     </style>
     
@@ -37,18 +47,16 @@
 
 <!-- Navigation -->
 <nav>
-    <a href="/">Start</a>
-    <div class="dropdown">
-        <a href="/boka.html" class="dropdown">Boka</a>
-    
-    </div>
-    <a href="/contact.html">Kontakt</a>
-    <a href="/cancellation.html">Avbokning</a>
+    <a href="/loginindex.html">Start</a>
+    <a href="/loginboka.html">Boka</a>
+    <a href="/logincontact.html">Kontakt</a>
+    <a href="/logincancellation.html">Avbokning</a>
     <a href="/bookings.html">Mina bokningar</a>
 </nav>
 
 <!-- Main content -->
-<div class="container">
+<div id="message">
+    <span style="color: white; font-weight: bold;">{{ message | safe }}</span>
 </div>
 
 <!-- Footer -->

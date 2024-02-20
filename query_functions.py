@@ -1,15 +1,17 @@
 import psycopg2
 
 #Update price
-def update_price(court_id, new_price):
+def update_price(activity, new_price):
     conn = psycopg2.connect(
-        host="postgres",
+        host="localhost",
+        database="postgres",
         user="postgres",
-        database="postgres"
+        password="____DITT LÖSENORD HÄR_____",
+        post="5432"
     )
     cursor = conn.cursor()
 
-    query = f"UPDATE court SET price = {new_price} WHERE court_id = {court_id}"
+    query = f"UPDATE court SET price = {new_price} WHERE activity = {activity}"
 
     cursor.execute(query)
     conn.commit()
@@ -17,15 +19,17 @@ def update_price(court_id, new_price):
     conn.close()
 
 #Availability
-def toggle_availability(court_id):
+def toggle_availability(activity):
     conn = psycopg2.connect(
-        host="postgres",
+        host="localhost",
+        database="postgres",
         user="postgres",
-        database="postgres"
+        password="____DITT LÖSENORD HÄR_____",
+        post="5432"
     )
     cursor = conn.cursor()
 
-    query = f"UPDATE court SET availability = CASE WHEN availability = TRUE THEN FALSE ELSE TRUE END WHERE court_id = {court_id}"
+    query = f"UPDATE court SET availability = CASE WHEN availability = TRUE THEN FALSE ELSE TRUE END WHERE activity = {activity}"
 
     cursor.execute(query)
     conn.commit()
@@ -33,15 +37,17 @@ def toggle_availability(court_id):
     conn.close()
 
 #Add activity
-def add_activity(new_court_id, new_activity, new_datetime, new_price, new_availability):
+def add_activity(new_activity, new_datetime, new_price, new_availability):
     conn = psycopg2.connect(
-        host="postgres",
+        host="localhost",
+        database="postgres",
         user="postgres",
-        database="postgres"
+        password="____DITT LÖSENORD HÄR_____",
+        post="5432"
     )
     cursor = conn.cursor()
 
-    query = f"INSERT INTO court (court_id, activity, datetime, price, availability) VALUES ({new_court_id}, {new_activity}, {new_datetime}, {new_price}, {new_availability})"
+    query = f"INSERT INTO court (court_id, activity, datetime, price, availability) VALUES ({new_activity}, {new_datetime}, {new_price}, {new_availability})"
 
     cursor.execute(query)
     conn.commit()
@@ -49,15 +55,17 @@ def add_activity(new_court_id, new_activity, new_datetime, new_price, new_availa
     conn.close()
 
 #Delete activity
-def delete_activity(court_id):
+def delete_activity(activity):
     conn = psycopg2.connect(
-        host="postgres",
+        host="localhost",
+        database="postgres",
         user="postgres",
-        database="postgres"
+        password="____DITT LÖSENORD HÄR_____",
+        post="5432"
     )
     cursor = conn.cursor()
 
-    query = f"DELETE FROM court WHERE court_id = {court_id}"
+    query = f"DELETE FROM court WHERE activity = {activity}"
 
     cursor.execute(query)
     conn.commit()
@@ -67,9 +75,11 @@ def delete_activity(court_id):
 #Update time of booking
 def update_booking_time(booking_id, new_datetime):
     conn = psycopg2.connect(
-        host="postgres",
+        host="localhost",
+        database="postgres",
         user="postgres",
-        database="postgres"
+        password="____DITT LÖSENORD HÄR_____",
+        post="5432"
     )
     cursor = conn.cursor()
 
@@ -83,9 +93,11 @@ def update_booking_time(booking_id, new_datetime):
 #Cancel booking
 def cancel_booking(booking_id):
     conn = psycopg2.connect(
-        host="postgres",
+        host="localhost",
+        database="postgres",
         user="postgres",
-        database="postgres"
+        password="____DITT LÖSENORD HÄR_____",
+        post="5432"
     )
     cursor = conn.cursor()
 
@@ -95,3 +107,49 @@ def cancel_booking(booking_id):
     conn.commit()
 
     conn.close()
+
+def get_filtered_bookings(email):
+    conn = psycopg2.connect(
+        host="localhost",
+        database="postgres",
+        user="postgres",
+        password="____DITT LÖSENORD HÄR_____",
+        post="5432"
+    )
+    
+    cursor = conn.cursor()
+
+    query = f"SELECT bookinginformation.booking_id, bookinginformation.activity, bookinginformation.datetime, bookinginformation.email, bookinginformation.phone
+        FROM bookinginformation
+        JOIN court ON bookinginformation.activity = court.activity
+        WHERE bookinginformation.email = {email};"
+    
+    cursor.execute(query)
+    conn.commit()
+
+    conn.close()
+
+
+def get_available_time_slots():
+    activity = request.args.get('activity')
+
+    if not activity:
+        return jsonify({"error": "Activity parameter is required"}), 400
+
+    # Read database credentials from the JSON file
+    credentials = read_credentials('path/to/credentials.json')
+
+    # Define the SELECT query with parameterized query
+    query = """
+        SELECT datetime FROM court
+        WHERE activity = %s AND availability = TRUE
+        ORDER BY datetime;
+    """
+
+    # Execute the query and return the results as JSON
+    results = execute_query(query, (activity,), credentials)
+    
+    # Extracting datetime values from the result
+    time_slots = [result[0] for result in results]
+
+    return jsonify({"available_time_slots": time_slots})

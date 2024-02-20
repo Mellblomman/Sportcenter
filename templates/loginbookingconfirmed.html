@@ -6,7 +6,18 @@
     <title>Devops Sportcenter</title>
     <link rel="stylesheet" href="/static/style.css">
     <style>
-        #message {
+        .custom-button2 {
+        float: right;
+        margin-top: -35px;
+        margin-bottom: 0px;
+        padding: 10px 20px;
+        border: none;
+        background-color: #0097b2;
+        color: white;
+        border-radius: 5px;
+
+    }
+    #message {
             max-width: 600px; /* Text width */
             margin: 100px auto 50px; /* Placement farther down and in */
             background-color: rgba(0, 0, 0, 0.5);
@@ -15,28 +26,38 @@
             box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5); /* Shadow effect */
             text-align: center; /* Text placement center */
         }
+    
     </style>
+    
 </head>
 <body>
 
-<!-- Picture in the middle of the page -->
+<!-- Picture middle of screen -->
 <img class="center-image" src="/static/sportcenter.png" alt="Sportcenter">
 
 <!-- Header -->
 <header>
     <h1>Devops Sportcenter</h1>
 </header>
-
+<button type="submit" class="custom-button2">Inloggad</button>
 <!-- Navigation -->
 <nav>
-    <a href="/">Start</a>
-    <a href="/activities.html">Våra aktiviteter</a>
-    <a href="/contact.html">Kontakt</a>
+    <a href="/loginindex.html">Start</a>
+    <a href="/loginboka.html">Boka</a>
+    <a href="/logincontact.html">Kontakt</a>
+    <a href="/logincancellation.html">Avbokning</a>
+    <a href="/bookings.html">Mina bokningar</a>
 </nav>
 
+
 <!-- Main content -->
-<div id="message">
-    <span style="color: white; font-weight: bold;">{{ message | safe }}</span>
+<div class="container">
+    <div id="message">
+        <span style="color: white; font-weight: bold;">{{ message | safe }}</span>
+        <p style="color: white;">Boknings ID: {{ booking_id }}</p>
+        <p style="color: white;">Datum: {{ booking_datetime }}</p>
+        <p style="color: white;">Tid: {{ booking_time }}</p>
+    </div>
 </div>
 
 <!-- Footer -->

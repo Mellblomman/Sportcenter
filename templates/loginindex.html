@@ -24,6 +24,18 @@
             transform: translateY(-2px); /* Button move up when hover */
             box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.5); /* Increasing shadoweffect while hovering over button */
         }
+        
+        .custom-button2 {
+        float: right;
+        margin-top: -35px;
+        margin-bottom: 0px;
+        padding: 10px 20px;
+        border: none;
+        background-color: #0097b2;
+        color: white;
+        border-radius: 5px;
+
+    }
     </style>
     
 </head>
@@ -35,17 +47,20 @@
 <!-- Header -->
 <header>
     <h1>Devops Sportcenter</h1>
-    <form action="/inloggning.html" method="post">
-        <button type="submit" class="custom-button">Logga in</button>
-    </form>
 </header>
+<button type="submit" class="custom-button2">Inloggad</button>
 
+<form action="/" method="post">
+    <button type="submit" class="custom-button">Logga ut</button>
+</form>
 
 <!-- Navigation -->
 <nav>
-    <a href="/">Start</a>
-    <a href="/activities.html">Våra aktiviteter</a>
-    <a href="/contact.html">Kontakt</a>
+    <a href="/loginindex.html">Start</a>
+    <a href="/loginboka.html">Boka</a>
+    <a href="/logincontact.html">Kontakt</a>
+    <a href="/logincancellation.html">Avbokning</a>
+    <a href="/bookings.html">Mina bokningar</a>
 </nav>
 
 <!-- Main content -->

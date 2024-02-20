@@ -8,6 +8,17 @@
 
     <style>
         .custom-button {
+            float: right;
+            margin-top: -35px;
+            margin-bottom: 0px;
+            padding: 10px 20px;
+            border: none;
+            background-color: #0097b2;
+            color: white;
+            border-radius: 5px;
+        }
+
+        .custom-button2 {
         float: right;
         margin-top: -35px;
         margin-bottom: 0px;
@@ -18,7 +29,6 @@
         border-radius: 5px;
 
     }
-    
     </style>
     
 </head>
@@ -30,25 +40,47 @@
 <!-- Header -->
 <header>
     <h1>Devops Sportcenter</h1>
-
 </header>
-<button type="submit" class="custom-button">Inloggad</button>
-
-
+<button type="submit" class="custom-button2">Inloggad</button>
 <!-- Navigation -->
 <nav>
-    <a href="/">Start</a>
-    <div class="dropdown">
-        <a href="/boka.html" class="dropdown">Boka</a>
-    
-    </div>
-    <a href="/contact.html">Kontakt</a>
-    <a href="/cancellation.html">Avbokning</a>
+    <a href="/loginindex.html">Start</a>
+    <a href="/loginboka.html">Boka</a>
+    <a href="/logincontact.html">Kontakt</a>
+    <a href="/logincancellation.html">Avbokning</a>
     <a href="/bookings.html">Mina bokningar</a>
 </nav>
 
 <!-- Main content -->
 <div class="container">
+    <h2 style="color: white;">Mina bokningar</h2>
+    <div id="bookings">
+        {% if bookings %}
+            <table>
+                <tr>
+                    <th style="padding-right: 20px; color: white;">Bokningsnr</th>
+                    <th style="padding-right: 20px; color: white;">Aktivitet</th>
+                    <th style="padding-right: 40px; color: white;">Datum</th>
+                    <th style="padding-right: 40px; color: white;">Tid</th>
+                    <th style="padding-right: 40px; color: white;">Pris</th>
+                    <!-- Lägg till andra kolumnrubriker efter behov -->
+                </tr>
+                <br>
+                {% for booking in bookings %}
+                <tr>
+                    <td style="color: white;">{{ booking[0] }}</td>
+                    <td style="color: white;">{{ booking[1] }}</td>
+                    <td style="color: white;">{{ booking[2] }}</td>
+                    <td style="color: white;">{{ booking[3].strftime("%H:%M") }}</td>
+                    <td style="color: white;">{{ booking[6] }}</td>
+                    <!-- Lägg till andra kolumnvärden efter behov -->
+                </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <p style="color: white;">{{ message }}</p>
+        {% endif %}
+    </div>
 </div>
 
 <!-- Footer -->

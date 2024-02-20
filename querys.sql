@@ -1,19 +1,19 @@
 UPDATE court
 SET price = new_price
-WHERE court_id = your_court_id;
+WHERE activity = activity_name;
 
 
 UPDATE court
 SET availability = CASE WHEN availability = TRUE THEN FALSE ELSE TRUE END
-WHERE court_id = your_court_id;
+WHERE activity = activity_name;
 
 
-INSERT INTO court (court_id, activity,  price, datetime, availability)
-VALUES (new_court_id, new_activity, new_datetime, new_price, new_availability);
+INSERT INTO court (activity,  price, datetime, availability)
+VALUES (new_activity, new_datetime, new_price, new_availability);
 
 
 DELETE FROM court
-WHERE court_id = your_court_id;
+WHERE activity = activity_name;
 
 
 UPDATE bookings
@@ -27,3 +27,17 @@ SELECT bookinginformation.booking_id, bookinginformation.activity, bookinginform
 FROM bookinginformation
 JOIN court ON bookinginformation.activity = court.activity
 WHERE bookinginformation.email = 'example_email';
+
+SELECT * FROM inloggningsuppgifter
+WHERE email = 'user_email' AND password = 'user_password';
+
+SELECT datetime FROM court
+WHERE activity = %s AND availability = TRUE
+ORDER BY datetime;
+
+SELECT activity, datetime
+FROM court
+WHERE availability = true AND activity = 'your_specific_activity'
+ORDER BY datetime;
+
+SELECT activity FROM court;
