@@ -201,7 +201,7 @@ def de_login_booking():
         if booking_confirmed(activity, date, time, email, phone):
             conn = psycopg2.connect(**conn_details)
             cur = conn.cursor()
-            cur.execute("SELECT booking_id, date, time FROM bookinginformation WHERE email = %s AND date = %s AND time = %s", (email, date, time,))
+            cur.execute("SELECT booking_id, date, time, price FROM user_bookings_view WHERE email = %s AND date = %s AND time = %s", (email, date, time,)) #Uppdaterad för att visa pris genom vår view.
             booking_info = cur.fetchone()
             cur.close()
             conn.close()
@@ -209,7 +209,8 @@ def de_login_booking():
                 booking_id = booking_info[0]
                 booking_datetime = booking_info[1]
                 booking_time = booking_info[2]
-                return render_template("loginbookingconfirmed.html", message="Bokningsinformationen har lagts till.", booking_id=booking_id, booking_datetime=booking_datetime, booking_time=booking_time)
+                booking_price = booking_info[3]
+                return render_template("loginbookingconfirmed.html", message="Bokningsinformationen har lagts till.", booking_id=booking_id, booking_datetime=booking_datetime, booking_time=booking_time, booking_price=booking_price)
             else:
                 return render_template("loginbookingconfirmed.html", message="Ingen bokning hittades med den angivna e-postadressen.")
         else:
