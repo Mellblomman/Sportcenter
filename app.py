@@ -74,12 +74,8 @@ def render_activities():
 def render_registration():
     return render_template("registration.html")
 
-@app.route("/contact.html", methods=["GET"])
+@app.route("/contact.html", methods=["POST", "GET"])
 def render_contact():
-    return render_template("contact.html")
-
-@app.route("/confirmationcontact.html", methods=["POST"])
-def render_confirmationcontact():
     if request.method == "POST":
         # Kontrollera om filen meddelande.txt finns, annars skapas den
         if not os.path.isfile("meddelanden.txt"):
@@ -95,22 +91,22 @@ def render_confirmationcontact():
 
         # Validera e-postadress
         if not re.match(email_pattern, request.form["email"]):
-            return render_template("/confirmationcontact.html", message="<span style='color: white;'>Felaktig e-postadress!</span>")
+            return render_template("/contact.html", message="<span style='color: white;'>Felaktig e-postadress!</span>")
 
         # Validera telefonnummer
         if not re.match(phone_pattern, request.form["telefon"]):
-            return render_template("/confirmationcontact.html", message="<span style='color: white;'>Felaktigt telefonnummer, fyll i 10 siffror!</span>")
+            return render_template("/contact.html", message="<span style='color: white;'>Felaktigt telefonnummer, fyll i 10 siffror!</span>")
 
         # Validera meddelandet
         if not re.match(message_pattern, request.form["message"]):
-            return render_template("/confirmationcontact.html", message="<span style='color: white;'>Meddelandet måste vara minst 3 tecken långt!</span>")
+            return render_template("/contact.html", message="<span style='color: white;'>Meddelandet måste vara minst 3 tecken långt!</span>")
 
         # Om allt är korrekt, spara datan
         with open("meddelanden.txt", "a", encoding="utf-8") as file:
             file.write(f"{request.form['email']}, {request.form['telefon']}, {request.form['message']}\n")
-        return render_template("/confirmationcontact.html", message="<span style='color: white;'>Tack för ditt mail, vi återkommer inom kort.</span>")
+        return render_template("/contact.html", message="<span style='color: white;'>Tack för ditt mail, vi återkommer inom kort.</span>")
     else:
-        return "Metoden är inte tillåten"
+        return render_template("contact.html")
   
 @app.route("/logincancellation.html", methods=["GET"])
 def render_logincancellation():
