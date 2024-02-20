@@ -42,6 +42,11 @@
             transform: translate(-50%, -50%); /* Adjust to center properly */
             z-index: 1; /* Ensure the image is behind the contact form */
         }
+        textarea {
+            resize: none;
+            width: 200px;
+            height: 100px; 
+        }
 
         
     </style>
@@ -72,12 +77,16 @@
     <h2 style="color: white;">Kontakta oss</h2>
     <br>
     <form action="/contact.html" method="post">
+        <h4 style="color: white;">Email: </h4>
         <input type="text" name="email" class="text-input" placeholder="Email" required>
         <br>
         <br>
+        <h4 style="color: white;">Telefonnummer: </h4>
         <input type="text" name="telefon" class="text-input" placeholder="Telefonnummer" required>
         <br>
-        <textarea id="message" name="message" rows="5" style="width: 200px; background-color: white;" placeholder="Skriv ditt meddelande här..." required></textarea>
+        <br>
+        <h4 style="color: white;">Meddelande: </h4>
+        <textarea id="message1" name="message" rows="5" style="width: 200px; background-color: white;" placeholder="Skriv ditt meddelande här..." required></textarea>
         <br>
         <input type="submit" value="Skicka">
     </form>
