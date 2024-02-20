@@ -8,7 +8,7 @@
     <style>
         .custom-button {
             margin-top: 10px; /* Add space over button */
-            margin-bottom: 10px; /* Add space under button */
+            margin: 0 auto; /* Add space under button */
             padding: 10px 20px; /* Adjust button padding */
             border: none; /* Remove lines on button */
             background-color: #0097b2; /* Background color for button */
@@ -19,7 +19,6 @@
             cursor: pointer; /* Pointer to hand while hovering */
             display: block; /* Button to block-element to move it under text field */
         }
-
         .custom-button:hover {
             transform: translateY(-2px); /* Button move up when hover */
             box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.5); /* Increasing shadoweffect while hovering over button */
@@ -33,9 +32,18 @@
         background-color: #0097b2;
         color: white;
         border-radius: 5px;
-
-    }
-    
+        }
+        #message {
+            max-width: 600px; /* Text width */
+            margin: 100px auto 50px; /* Placement farther down and in */
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5); /* Shadow effect */
+            text-align: center; /* Text placement center */
+            position: relative; /* Ensure z-index works */
+            z-index: 2; /* Ensure contact form appears above image */
+        }
     </style>
     
 </head>
@@ -59,17 +67,17 @@
     <a href="/logincancellation.html">Avbokning</a>
     <a href="/bookings.html">Mina bokningar</a>
 </nav>
-
-<div class="container">
+<div id="message">
+    <span style="color: white; font-weight: bold;">{{ message | safe }}</span>
     <h2 style="color: white;">Ange bokningsnummer</h2>
     <br>
-    <form action="/loginconfirmationcancellation.html" method="post">
+    <form action="/logincancellation.html" method="post">
         <input type="text" name="booking_id" class="text-input" placeholder="Bokningsnummer">
         <br> <!-- Newline -->
         <br>
         <button type="submit" class="custom-button">Avboka</button>
     </form>
-    <div id="message"></div>
+       
 </div>
 
 <!-- Footer -->

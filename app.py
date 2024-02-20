@@ -108,9 +108,19 @@ def render_contact():
     else:
         return render_template("contact.html")
   
-@app.route("/logincancellation.html", methods=["GET"])
+@app.route("/logincancellation.html", methods=["GET", "POST"])
 def render_logincancellation():
-    return render_template("logincancellation.html")
+    if request.method == "POST":
+        booking_id = request.form.get("booking_id") # Sparar datan användaren skriver in på hemsidan i booking_id variabeln
+        if booking_id:
+            if delete_booking_from_database(booking_id):
+                return render_template("logincancellation.html", message="Avbokat")
+            else:
+                return render_template("logincancellation.html", message="Hittade ingen bokning med det id")
+        else:
+            return render_template("logincancellation.html", message="Inget bokningsid angivet")
+    else:
+         return render_template("logincancellation.html")
 
 @app.route("/loginboka.html", methods=["GET"])
 def render_loginboka():
@@ -153,19 +163,6 @@ def render_logincontact():
 @app.route("/loginindex.html", methods=["GET"])
 def render_loginindex():
     return render_template("loginindex.html")
-
-@app.route("/loginconfirmationcancellation.html", methods=["POST","GET"])
-def delete_login_booking():
-    booking_id = request.form.get("booking_id") # Sparar datan användaren skriver in på hemsidan i booking_id variabeln
-    if booking_id:
-        if delete_booking_from_database(booking_id):
-            return render_template("loginconfirmationcancellation.html", message="Avbokat")
-        else:
-            return render_template("loginconfirmationcancellation.html", message="Hittade ingen bokning med det id")
-    else:
-        return render_template("loginconfirmationcancellation.html", message="Inget bokningsid angivet")
-
-
     
 @app.route("/loginbookingconfirmed.html", methods=["POST", "GET"])
 def de_login_booking():
