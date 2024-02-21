@@ -66,16 +66,29 @@
         <h2 style="color: white;">Fyll i dina önskade uppgifter</h2>
         <br>
         <form action="/registrationstatus.html" method="post">
-            <input type="text" name="email" class="text-input" placeholder="Email">
+            <input type="text" name="email" class="text-input" placeholder="Email" id="Email" required>
             <br> <!-- Newline -->
             <br>
-            <input type="text" name="password" class="text-input" placeholder="Lösenord">
+            <input type="password" name="password" class="text-input" placeholder="Lösenord" id="psw" required>
             <br> <!-- Newline -->
             <br>
-            <input type="text" name="phone" class="text-input" placeholder="Telefonnummer">
+            <input type="password" placeholder="Upprepa Lösenord" name="psw" id="psw" required>
+            <br>
+            <br>
+            <input type="text" name="phone" class="text-input" placeholder="Telefonnummer" id="Phonenumber" required>
             <br> <!-- Newline -->
             <br>
-            <button type="submit" class="custom-button">Skapa konto</button>
+            <hr>
+                    <ul><li><h4 style="color: white;">Godkännande av tredjepartsdelning.</h4>
+                    <p style="color: white;">Genom att registrera dig så godkänner 
+                    du våra allmänna villkor. Vi kommer ta in uppgifter som 
+                    kommer delas med tredjepart för att du ska få den bästa 
+                    upplevelsen på våran sida som möjligt. Peronliga uppgifter 
+                    delas ej med tredjepart så som namn, personuppgifter och 
+                    kontaktuppgifter.
+                    <br></p></li></ul>
+                    <br>
+            <button type="submit" class="custom-button">Om du godkänner så Skapa Konto här!</button>
         </form>       
     </div>
    

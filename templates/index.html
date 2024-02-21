@@ -5,8 +5,73 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Devops Sportcenter</title>
     <link rel="stylesheet" href="/static/style.css">
-
+    <link href="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
     <style>
+        
+        .glow-on-hover {
+        width: 200px;
+        height: 50px;
+        border: none;
+        outline: none;
+        color: #fff;
+        background: #111;
+        cursor: pointer;
+        position: relative;
+        z-index: 0;
+        border-radius: 10px;
+    }
+    
+    .glow-on-hover:before {
+        content: '';
+        background: linear-gradient(45deg, orange, white, #555555, #0097b2);
+        position: absolute;
+        top: -2px;
+        left: -2px;
+        right: -2px;
+        background-size: 400%;
+        z-index: -1;
+        filter: blur(2px);
+        width: calc(100% + 5px);
+        height: calc(100% + 5px);
+        animation: glowing 20s linear infinite;
+        opacity: 0;
+        transition: opacity .3s ease-in-out;
+        border-radius: 10px;
+    }
+    
+    .glow-on-hover:active {
+        color: #000
+    }
+    
+    .glow-on-hover:active:after {
+        background: transparent;
+    }
+    
+    .glow-on-hover:hover:before {
+        opacity: 1;
+    }
+    
+    .glow-on-hover:after {
+        z-index: -1;
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: #0097b2;
+        left: 0;
+        top: 0;
+        border-radius: 10px;
+    }
+    
+    @keyframes glowing {
+        0% { background-position: 0 0; }
+        50% { background-position: 400% 0; }
+        100% { background-position: 0 0; }
+    }</style>
+
+    <style>        
         .custom-button {
         float: right;
         margin-top: -35px;
@@ -24,6 +89,7 @@
             transform: translateY(-2px); /* Button move up when hover */
             box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.5); /* Increasing shadoweffect while hovering over button */
         }
+        
     </style>
     
 </head>
@@ -49,12 +115,22 @@
 </nav>
 
 <!-- Main content -->
-<div class="container">
+<div class="glow-on-hover"><h4>Made by: Simon, Lukas <br>Maximilian, Mattias <br> Samin</h4>
 </div>
 
 <!-- Footer -->
 <footer>
-    <p>&copy; 2024 Devops Sportcenter. Alla rättigheter förbehållna.</p>
+    <p>&copy; 2024 Devops Sportcenter. Alla rättigheter förbehållna.</p><hr><hr>
+    <h3>Källkod på:</h3>
+
+    <button class="glow-on-hover" type="button">
+        <a href="https://github.com/Mellblomman/Sportcenter" class="footer-icon" aria-label="Github">
+            <i class="fa fa-github"></i>
+        </a>
+    </button><br>
+    <hr><hr>
+    
+
 </footer>
 
 </body>

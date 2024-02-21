@@ -120,7 +120,7 @@ footer {
     left: 0;
     bottom: 0;
     width: 100%;
-    background-color: #333;
+    background-color: ;
     color: white;
     text-align: center;
     padding: 1px;
@@ -134,4 +134,10 @@ footer {
     transform: translate(-50%, -50%);
     width: 400px; /* Justera bredden enligt önskemål */
     border-radius: 5px;
+}
+
+/* Stilar för GitHub och Instagram ikoner */
+.footer-icon {
+    font-size: 24px; /* Justera storleken efter behov */
+    color: white; /* Färgen på ikonen */
 }
