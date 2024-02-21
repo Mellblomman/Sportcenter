@@ -29,17 +29,18 @@
             transform: translateY(-2px); /* Button move up when hover */
             box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.5); /* Increasing shadoweffect while hovering over button */
         }
-        
+
         #message {
             max-width: 600px; /* Text width */
-            margin: 170px auto 50px; /* Placement farther down and in */
+            margin: 100px auto 50px; /* Placement farther down and in */
             background-color: rgba(0, 0, 0, 0.5);
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5); /* Shadow effect */
             text-align: center; /* Text placement center */
+            position: relative; /* Ensure z-index works */
+            z-index: 2; /* Ensure contact form appears above image */
         }
-
 
         .custom-button2 {
         float: right;
