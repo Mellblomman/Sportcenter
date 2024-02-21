@@ -273,7 +273,7 @@ def get_user_bookings():
     if "email" in session:  # Förutsatt att du har lagrat användarens e-postadress i sessionsvariabeln 'email'
         email = session["email"]
         user_bookings = fetch_user_bookings_from_database(email)
-        if user_bookings is not None:
+        if user_bookings == True:
             return render_template("bookings.html", bookings=user_bookings)
         else:
             return render_template("bookings.html", message="Inga bokningar hittades för den aktuella användaren.")
