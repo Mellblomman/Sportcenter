@@ -29,6 +29,32 @@
         border-radius: 5px;
 
     }
+    #message {
+            max-width: 600px; /* Text width */
+            margin: 100px auto 50px; /* Placement farther down and in */
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5); /* Shadow effect */
+            text-align: center; /* Text placement center */
+            position: relative; /* Ensure z-index works */
+            z-index: 2; /* Ensure contact form appears above image */
+        }
+        #bookings table {
+            margin: 0 auto;
+            color: white;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        #bookings table th,
+        #bookings table td {
+            padding: 10px;
+            border-bottom: 1px solid white;
+        }
+        #bookings table th {
+            font-weight: bold;
+        }
     </style>
     
 </head>
@@ -53,16 +79,18 @@
 
 <!-- Main content -->
 <div class="container">
+    <div id="message">
+        <span style="color: white; font-weight: bold;">{{ message | safe }}</span>
     <h2 style="color: white;">Mina bokningar</h2>
     <div id="bookings">
         {% if bookings %}
             <table>
                 <tr>
-                    <th style="padding-right: 20px; color: white;">Bokningsnr</th>
-                    <th style="padding-right: 20px; color: white;">Aktivitet</th>
-                    <th style="padding-right: 40px; color: white;">Datum</th>
-                    <th style="padding-right: 40px; color: white;">Tid</th>
-                    <th style="padding-right: 40px; color: white;">Pris</th>
+                    <th style="color: white;">Bokningsnr</th>
+                    <th style="color: white;">Aktivitet</th>
+                    <th style="color: white;">Datum</th>
+                    <th style="color: white;">Tid</th>
+                    <th style="color: white;">Pris</th>
                     <!-- Lägg till andra kolumnrubriker efter behov -->
                 </tr>
                 <br>
@@ -80,6 +108,7 @@
         {% else %}
             <p style="color: white;">{{ message }}</p>
         {% endif %}
+    </div>
     </div>
 </div>
 
