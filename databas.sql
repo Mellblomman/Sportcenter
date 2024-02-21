@@ -15,7 +15,7 @@ CREATE TABLE bookinginformation (
 );
 
 CREATE TABLE inloggningsuppgifter (
-    email VARCHAR(255),
+    email VARCHAR(255) PRIMARY KEY,
     password VARCHAR(30),
     phone VARCHAR(10),
     admin boolean DEFAULT 'FALSE'

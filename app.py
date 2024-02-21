@@ -74,12 +74,8 @@ def render_activities():
 def render_registration():
     return render_template("registration.html")
 
-@app.route("/contact.html", methods=["GET"])
+@app.route("/contact.html", methods=["POST", "GET"])
 def render_contact():
-    return render_template("contact.html")
-
-@app.route("/confirmationcontact.html", methods=["POST"])
-def render_confirmationcontact():
     if request.method == "POST":
         # Kontrollera om filen meddelande.txt finns, annars skapas den
         if not os.path.isfile("meddelanden.txt"):
@@ -95,52 +91,43 @@ def render_confirmationcontact():
 
         # Validera e-postadress
         if not re.match(email_pattern, request.form["email"]):
-            return render_template("/confirmationcontact.html", message="<span style='color: white;'>Felaktig e-postadress!</span>")
+            return render_template("/contact.html", message="<span style='color: white;'>Felaktig e-postadress!</span>")
 
         # Validera telefonnummer
         if not re.match(phone_pattern, request.form["telefon"]):
-            return render_template("/confirmationcontact.html", message="<span style='color: white;'>Felaktigt telefonnummer, fyll i 10 siffror!</span>")
+            return render_template("/contact.html", message="<span style='color: white;'>Felaktigt telefonnummer, fyll i 10 siffror!</span>")
 
         # Validera meddelandet
         if not re.match(message_pattern, request.form["message"]):
-            return render_template("/confirmationcontact.html", message="<span style='color: white;'>Meddelandet måste vara minst 3 tecken långt!</span>")
+            return render_template("/contact.html", message="<span style='color: white;'>Meddelandet måste vara minst 3 tecken långt!</span>")
 
         # Om allt är korrekt, spara datan
         with open("meddelanden.txt", "a", encoding="utf-8") as file:
             file.write(f"{request.form['email']}, {request.form['telefon']}, {request.form['message']}\n")
-        return render_template("/confirmationcontact.html", message="<span style='color: white;'>Tack för ditt mail, vi återkommer inom kort.</span>")
+        return render_template("/contact.html", message="<span style='color: white;'>Tack för ditt mail, vi återkommer inom kort.</span>")
     else:
-        return "Metoden är inte tillåten"
+        return render_template("contact.html")
   
-@app.route("/logincancellation.html", methods=["GET"])
+@app.route("/logincancellation.html", methods=["GET", "POST"])
 def render_logincancellation():
-    return render_template("logincancellation.html")
+    if request.method == "POST":
+        booking_id = request.form.get("booking_id") # Sparar datan användaren skriver in på hemsidan i booking_id variabeln
+        if booking_id:
+            if delete_booking_from_database(booking_id):
+                return render_template("logincancellation.html", message="Avbokat")
+            else:
+                return render_template("logincancellation.html", message="Hittade ingen bokning med det id")
+        else:
+            return render_template("logincancellation.html", message="Inget bokningsid angivet")
+    else:
+         return render_template("logincancellation.html")
 
 @app.route("/loginboka.html", methods=["GET"])
 def render_loginboka():
     return render_template("loginboka.html")
 
-@app.route("/logincontact.html", methods=["GET"])
+@app.route("/logincontact.html", methods=["GET", "POST"])
 def render_logincontact():
-    return render_template("logincontact.html")
-
-@app.route("/loginindex.html", methods=["GET"])
-def render_loginindex():
-    return render_template("loginindex.html")
-
-@app.route("/loginconfirmationcancellation.html", methods=["POST","GET"])
-def delete_login_booking():
-    booking_id = request.form.get("booking_id") # Sparar datan användaren skriver in på hemsidan i booking_id variabeln
-    if booking_id:
-        if delete_booking_from_database(booking_id):
-            return render_template("loginconfirmationcancellation.html", message="Avbokat")
-        else:
-            return render_template("loginconfirmationcancellation.html", message="Hittade ingen bokning med det id")
-    else:
-        return render_template("loginconfirmationcancellation.html", message="Inget bokningsid angivet")
-
-@app.route("/loginconfirmationcontact.html", methods=["POST", "GET"])
-def render_login_confirmationcontact():
     if request.method == "POST":
         # Kontrollera om filen meddelande.txt finns, annars skapas den
         if not os.path.isfile("meddelanden.txt"):
@@ -156,22 +143,26 @@ def render_login_confirmationcontact():
 
         # Validera e-postadress
         if not re.match(email_pattern, request.form["email"]):
-            return render_template("/loginconfirmationcontact.html", message="<span style='color: white;'>Felaktig e-postadress!</span>")
+            return render_template("/logincontact.html", message="<span style='color: white;'>Felaktig e-postadress!</span>")
 
         # Validera telefonnummer
         if not re.match(phone_pattern, request.form["telefon"]):
-            return render_template("/loginconfirmationcontact.html", message="<span style='color: white;'>Felaktigt telefonnummer, fyll i 10 siffror!</span>")
+            return render_template("/logincontact.html", message="<span style='color: white;'>Felaktigt telefonnummer, fyll i 10 siffror!</span>")
 
         # Validera meddelandet
         if not re.match(message_pattern, request.form["message"]):
-            return render_template("/loginconfirmationcontact.html", message="<span style='color: white;'>Meddelandet måste vara minst 3 tecken långt!</span>")
+            return render_template("/logincontact.html", message="<span style='color: white;'>Meddelandet måste vara minst 3 tecken långt!</span>")
 
         # Om allt är korrekt, spara datan
         with open("meddelanden.txt", "a", encoding="utf-8") as file:
             file.write(f"{request.form['email']}, {request.form['telefon']}, {request.form['message']}\n")
-        return render_template("/loginconfirmationcontact.html", message="<span style='color: white;'>Tack för ditt mail, vi återkommer inom kort.</span>")
+        return render_template("/logincontact.html", message="<span style='color: white;'>Tack för ditt mail, vi återkommer inom kort.</span>")
     else:
-        return "Metoden är inte tillåten"
+        return render_template("logincontact.html")
+
+@app.route("/loginindex.html", methods=["GET"])
+def render_loginindex():
+    return render_template("loginindex.html")
     
 @app.route("/loginbookingconfirmed.html", methods=["POST", "GET"])
 def de_login_booking():
@@ -210,7 +201,7 @@ def de_login_booking():
         if booking_confirmed(activity, date, time, email, phone):
             conn = psycopg2.connect(**conn_details)
             cur = conn.cursor()
-            cur.execute("SELECT booking_id, date, time FROM bookinginformation WHERE email = %s AND date = %s AND time = %s", (email, date, time,))
+            cur.execute("SELECT booking_id, date, time, price FROM user_bookings_view WHERE email = %s AND date = %s AND time = %s", (email, date, time,)) #Uppdaterad för att visa pris genom vår view.
             booking_info = cur.fetchone()
             cur.close()
             conn.close()
@@ -218,7 +209,8 @@ def de_login_booking():
                 booking_id = booking_info[0]
                 booking_datetime = booking_info[1]
                 booking_time = booking_info[2]
-                return render_template("loginbookingconfirmed.html", message="Bokningsinformationen har lagts till.", booking_id=booking_id, booking_datetime=booking_datetime, booking_time=booking_time)
+                booking_price = booking_info[3]
+                return render_template("loginbookingconfirmed.html", message="Bokningsinformationen har lagts till.", booking_id=booking_id, booking_datetime=booking_datetime, booking_time=booking_time, booking_price=booking_price)
             else:
                 return render_template("loginbookingconfirmed.html", message="Ingen bokning hittades med den angivna e-postadressen.")
         else:
