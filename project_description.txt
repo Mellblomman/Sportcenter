@@ -1,0 +1,23 @@
+1. Krav och specifikationer
+
+  https://trello.com/b/33DCmCdL/sportcenter
+  
+2. Genomfört och kvarvarande arbete
+
+  Vi har byggt en hemsida med hjälp av frontend i HTML, backend i Python och databaser i Postgres/SQL. På hemsidan går det att boka en bana för vald aktivitet i en-timmesintervaller. Det går även att avboka en bokning som gjorts. 
+  Det finns tillgång till inloggning för användare som vill se de bokningar de har gjort. Det finns även inloggning för admin där det går att ändra pris på en aktivitet, lägga till nya aktiviteter samt att ta bort en aktivitet.
+  Det finns databaser som sparar bokningar som gjorts samt de aktiviteter som finns tillgängliga.
+  
+3. Teknisk skuld
+
+  Meddelande via text-fil på grund utav tidsbrist.
+  Hårdkodade priser i HTML.
+  Ändra bokningar fungerar men det går enbart genom att avboka och boka ny tid.
+  Det går att boka datum som redan har passerat.
+  Saknas specifika tester för alla funktioner. Är testade via körning av kod.
+  Kunskapsbrist inom JavaScript.
+  
+4. Kvalitetsbeskrivning
+
+  Koden gör det den ska. Vi har däremot inte lagt så mycket tid på säkerheten utöver standardskydd mot SQL injections. Koden är läsbar utifrån gruppens perspektiv. Kommentarer har lagts till där det kan behövas lite förtydligande.
+  Dokumentation saknas i stor utsträckning då det inte behövdes. README-filen täcker det nödvändiga för att applikationen ska kunna användas. 
